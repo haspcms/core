@@ -1,6 +1,6 @@
 import axios, {
-  AxiosResponse,
   AxiosError,
+  AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
 
@@ -16,7 +16,7 @@ export default function setup(axiosInstance: typeof axios) {
     (error: AxiosError) => {
       // Handle request error here if needed
       return Promise.reject(error);
-    }
+    },
   );
 
   axiosInstance.interceptors.response.use(
@@ -26,6 +26,6 @@ export default function setup(axiosInstance: typeof axios) {
     (error: AxiosError) => {
       // Handle response error here (e.g., display global popup notification)
       return Promise.reject(error.response);
-    }
+    },
   );
 }

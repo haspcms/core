@@ -13,7 +13,7 @@ interface SWROptions<T = any> extends SWRConfiguration<T> {
 export default class BaseApi {
   static async get<T = any>(
     URL: string,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<AxiosResponse<T>> {
     return await axios.get<T>(URL, config);
   }
@@ -21,51 +21,51 @@ export default class BaseApi {
   static async post<T = any, D = any>(
     URL: string,
     data: D,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<AxiosResponse<T>> {
     return await axios.post<T>(URL, data, config).then(
       (response) => response,
       (error) => {
         throw error;
-      }
+      },
     );
   }
 
   static async put<T = any, D = any>(
     URL: string,
     data: D,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<AxiosResponse<T>> {
     return await axios.put<T>(URL, data, config).then(
       (response) => response,
       (error) => {
         throw error;
-      }
+      },
     );
   }
 
   static async patch<T = any, D = any>(
     URL: string,
     data: D,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<AxiosResponse<T>> {
     return await axios.patch<T>(URL, data, config).then(
       (response) => response,
       (error) => {
         throw error;
-      }
+      },
     );
   }
 
   static async delete<T = any>(
     URL: string,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<AxiosResponse<T>> {
     return await axios.delete<T>(URL, config).then(
       (response) => response,
       (error) => {
         throw error;
-      }
+      },
     );
   }
 
@@ -81,7 +81,7 @@ export default class BaseApi {
     const { data, mutate, isValidating, error }: SWRResponse<T, any> = UseSWR(
       render ? URL : null,
       fetcher,
-      options
+      options,
     );
 
     return {
@@ -95,7 +95,7 @@ export default class BaseApi {
   // No Interceptor Methods
   static async customGet<T = any>(
     URL: string,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<AxiosResponse<T>> {
     return basicAxios.get<T>(URL, config);
   }
@@ -103,7 +103,7 @@ export default class BaseApi {
   static async customPut<T = any, D = any>(
     URL: string,
     data: D,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<AxiosResponse<T>> {
     return basicAxios.put<T>(URL, data, config);
   }
