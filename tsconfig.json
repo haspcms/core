@@ -29,8 +29,9 @@
       "@hooks/*": ["./src/hooks/*"],
       "@types": ["./src/types"],
       "@animations/*": ["./src/animations/*"],
-      "@helpers/*": ["./src/helpers/*"],
+      "@helpers/*": ["./src/helpers/*"]
     }
   },
-  "exclude": ["node_modules"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
