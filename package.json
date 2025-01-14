@@ -69,6 +69,8 @@
     "lint-staged": "^15.3.0",
     "next": "^15.1.4",
     "prettier": "^3.4.2",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-tailwindcss": "^0.6.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup": "^3.28.1",
