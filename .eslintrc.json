@@ -1,0 +1,22 @@
+{
+  "extends": [
+    // "plugin:@typescript-eslint/recommended",
+    "next",
+    "next/core-web-vitals",
+    "prettier"
+  ],
+  "plugins": ["prettier"],
+  "rules": {
+    "@next/next/no-html-link-for-pages": "off",
+    "react/jsx-key": "off",
+    "prettier/prettier": "warn",
+    "no-console": ["warn", { "allow": ["error"] }],
+    "no-undef": "warn",
+    "no-unused-vars": ["warn", { "args": "none" }],
+    "eqeqeq": ["warn", "always"],
+    "no-unexpected-multiline": "warn",
+    "no-cond-assign": ["warn", "always"],
+    "no-redeclare": "warn",
+    "no-self-compare": "warn"
+  }
+}
