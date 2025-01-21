@@ -1,4 +1,4 @@
-import Jsona from "jsona";
+import { Jsona } from "jsona";
 console.log("props", Jsona);
 
 import { PAGEAPI } from "../api";
