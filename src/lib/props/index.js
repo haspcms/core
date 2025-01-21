@@ -1,4 +1,6 @@
 import Jsona from "jsona";
+console.log("props", Jsona);
+
 import { PAGEAPI } from "../api";
 import { sortBlocks } from "../helpers";
 import {
