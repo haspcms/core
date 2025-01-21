@@ -10,7 +10,7 @@ export default defineConfig({
     },
     rollupOptions: {
       // Externalize peer dependencies to prevent bundling them
-      external: ["axios", "react", "react-dom", "swr", "jsona"],
+      external: ["axios", "react", "react-dom", "swr", "jsona", "fs", "path"],
       output: {
         // Provide global variables for UMD builds
         globals: {
