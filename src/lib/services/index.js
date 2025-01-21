@@ -1,5 +1,5 @@
 import Jsona from "jsona";
-import { CONTENTAPI, FORMAPI, TAXONOMYAPI } from "../api";
+import { CONTENTAPI, FORMAPI, PAGEAPI, TAXONOMYAPI } from "../api";
 const dataFormatter = new Jsona();
 const dataFetcher = async (handler) => {
   await Promise.all(
@@ -80,93 +80,93 @@ export async function iterateBlock(blocks) {
     }),
   );
 }
-// export async function iteratePage(page) {
-//   return await dataFetcher(page);
-// }
-// export async function pagesPath() {
-//   const pagesHandler = await PAGEAPI.getPages();
-//   const pages = dataFormatter.deserialize(pagesHandler);
-//   let allData = pages;
-//   let { last_page = 1 } = pagesHandler?.meta || {};
-//   let current_page = 1;
-//   while (current_page < last_page) {
-//     current_page = current_page + 1;
-//     const pagesHandler = await PAGEAPI.getPages(
-//       `?page[number]=${current_page}`,
-//     );
-//     const pages = dataFormatter.deserialize(pagesHandler);
-//     allData = [...allData, ...pages];
-//   }
-//   return allData;
-// }
-// export async function contentEntriesPath(content) {
-//   const contentsHandler = await CONTENTAPI.getContents(content);
-//   const contents = dataFormatter.deserialize(contentsHandler);
-//   let allData = contents;
-//   let { last_page = 1 } = contentsHandler?.meta || {};
-//   let current_page = 1;
-//   while (current_page < last_page) {
-//     current_page = current_page + 1;
-//     const contentsHandler = await CONTENTAPI.getContents(
-//       content,
-//       `?page[number]=${current_page}`,
-//     );
-//     const contents = dataFormatter.deserialize(contentsHandler);
-//     allData = [...allData, ...contents];
-//   }
-//   return allData;
-// }
+export async function iteratePage(page) {
+  return await dataFetcher(page);
+}
+export async function pagesPath() {
+  const pagesHandler = await PAGEAPI.getPages();
+  const pages = dataFormatter.deserialize(pagesHandler);
+  let allData = pages;
+  let { last_page = 1 } = pagesHandler?.meta || {};
+  let current_page = 1;
+  while (current_page < last_page) {
+    current_page = current_page + 1;
+    const pagesHandler = await PAGEAPI.getPages(
+      `?page[number]=${current_page}`,
+    );
+    const pages = dataFormatter.deserialize(pagesHandler);
+    allData = [...allData, ...pages];
+  }
+  return allData;
+}
+export async function contentEntriesPath(content) {
+  const contentsHandler = await CONTENTAPI.getContents(content);
+  const contents = dataFormatter.deserialize(contentsHandler);
+  let allData = contents;
+  let { last_page = 1 } = contentsHandler?.meta || {};
+  let current_page = 1;
+  while (current_page < last_page) {
+    current_page = current_page + 1;
+    const contentsHandler = await CONTENTAPI.getContents(
+      content,
+      `?page[number]=${current_page}`,
+    );
+    const contents = dataFormatter.deserialize(contentsHandler);
+    allData = [...allData, ...contents];
+  }
+  return allData;
+}
 
-// export function getMediaConvertions(blueprintData = []) {
-//   const media = {};
-//   blueprintData?.forEach((e) => {
-//     if (e?.attributes?.media?.length) {
-//       media[e?.attributes?.state_path] = e?.attributes?.media?.map((e1) => {
-//         return {
-//           original: e1?.attributes?.original_url,
-//           conversions: e1?.attributes?.generated_conversions,
-//         };
-//       });
-//     }
-//   });
-//   return media;
-// }
+export function getMediaConvertions(blueprintData = []) {
+  const media = {};
+  blueprintData?.forEach((e) => {
+    if (e?.attributes?.media?.length) {
+      media[e?.attributes?.state_path] = e?.attributes?.media?.map((e1) => {
+        return {
+          original: e1?.attributes?.original_url,
+          conversions: e1?.attributes?.generated_conversions,
+        };
+      });
+    }
+  });
+  return media;
+}
 
-// export function replaceAndFormatMediaConvertions(obj, searchKey, replaceKey) {
-//   // Check if the input is an object
-//   if (typeof obj !== "object" || obj === null) {
-//     return obj;
-//   }
+export function replaceAndFormatMediaConvertions(obj, searchKey, replaceKey) {
+  // Check if the input is an object
+  if (typeof obj !== "object" || obj === null) {
+    return obj;
+  }
 
-//   // If the current object is an array, iterate through its elements
-//   if (Array.isArray(obj)) {
-//     return obj.map((item) =>
-//       replaceAndFormatMediaConvertions(item, searchKey, replaceKey),
-//     );
-//   }
+  // If the current object is an array, iterate through its elements
+  if (Array.isArray(obj)) {
+    return obj.map((item) =>
+      replaceAndFormatMediaConvertions(item, searchKey, replaceKey),
+    );
+  }
 
-//   // Create a new object to hold the replaced key/value pairs
-//   const result = {};
+  // Create a new object to hold the replaced key/value pairs
+  const result = {};
 
-//   for (const key in obj) {
-//     if (key === searchKey) {
-//       const reformatData = getMediaConvertions(obj[key]);
-//       result[replaceKey] = replaceAndFormatMediaConvertions(
-//         reformatData,
-//         searchKey,
-//         replaceKey,
-//       );
-//     } else {
-//       result[key] = replaceAndFormatMediaConvertions(
-//         obj[key],
-//         searchKey,
-//         replaceKey,
-//       );
-//     }
-//   }
+  for (const key in obj) {
+    if (key === searchKey) {
+      const reformatData = getMediaConvertions(obj[key]);
+      result[replaceKey] = replaceAndFormatMediaConvertions(
+        reformatData,
+        searchKey,
+        replaceKey,
+      );
+    } else {
+      result[key] = replaceAndFormatMediaConvertions(
+        obj[key],
+        searchKey,
+        replaceKey,
+      );
+    }
+  }
 
-//   return result;
-// }
+  return result;
+}
 
 export const consoleServices = () => {
   console.log("console services");
