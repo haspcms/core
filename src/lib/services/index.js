@@ -1,7 +1,7 @@
 import Jsona from "jsona";
 import { CONTENTAPI, FORMAPI, PAGEAPI, TAXONOMYAPI } from "../api";
 const dataFormatter2 = new Jsona();
-const dataFetcher = async (handler) => {
+export const dataFetcher = async (handler) => {
   await Promise.all(
     Object.keys(handler?.data || {}).map(async (key1) => {
       return await Promise.all(
@@ -66,7 +66,7 @@ const dataFetcher = async (handler) => {
     "mediaHandler",
   );
 };
-const clean = (data) => {
+export const clean = (data) => {
   delete data?.links;
   delete data?.meta;
   delete data?.relationshipNames;
