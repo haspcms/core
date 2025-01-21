@@ -9,7 +9,7 @@ import {
 } from "../services";
 const dataFormatter = new Jsona();
 
-const paths = async () => {
+export const paths = async () => {
   const pages = await pagesPath();
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
@@ -32,7 +32,7 @@ const paths = async () => {
   return { paths, fallback: false };
 };
 
-const props = async (context) => {
+export const props = async (context) => {
   const id = context?.params?.id || [];
   const segment = id.join("/");
   const pageHandler = await PAGEAPI.findByRoute(
@@ -69,5 +69,3 @@ const props = async (context) => {
     };
   }
 };
-
-export { paths, props };
