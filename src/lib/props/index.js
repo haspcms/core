@@ -5,16 +5,10 @@ import { PAGEAPI } from "../api";
 import { sortBlocks } from "../helpers";
 import {
   contentEntriesPath,
-  // iterateBlock,
-  // iteratePage,
+  iterateBlock,
+  iteratePage,
   pagesPath,
 } from "../services";
-// import {
-//   contentEntriesPath,
-//   iterateBlock,
-//   iteratePage,
-//   pagesPath,
-// } from "../services";
 const dataFormatter = new Jsona();
 
 export const paths = async () => {
@@ -66,8 +60,8 @@ export const props = async (context) => {
     delete page.blockContents;
     return {
       props: {
-        // page: await iteratePage(page),
-        // blocks: await iterateBlock(blocks),
+        page: await iteratePage(page),
+        blocks: await iterateBlock(blocks),
       },
     };
     // eslint-disable-next-line no-unused-vars
