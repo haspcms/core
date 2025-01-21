@@ -1,14 +1,14 @@
 import { Jsona } from "jsona";
-console.log("props", Jsona);
-
+import { resolve } from "path";
 import { PAGEAPI } from "../api";
-import { loadConfig, sortBlocks } from "../helpers";
+import { sortBlocks } from "../helpers";
 import {
   contentEntriesPath,
   iterateBlock,
   iteratePage,
   pagesPath,
 } from "../services";
+console.log("props", Jsona);
 const dataFormatter = new Jsona();
 
 export const paths = async () => {
@@ -16,8 +16,10 @@ export const paths = async () => {
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
   console.log("process.cwd()", process.cwd());
-  const config = loadConfig();
-  console.log({ config });
+  // const config = loadConfig();
+  // console.log({ config });
+  const res = resolve(__dirname, "/hasp.config.js");
+  console.log({ res });
   // const contentTypes = ["rooms", "services", "articles"]; // Add your content types here
   const contentTypes = ["article"];
 
