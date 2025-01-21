@@ -1,6 +1,6 @@
 import Jsona from "jsona";
 import { CONTENTAPI, FORMAPI, PAGEAPI, TAXONOMYAPI } from "../api";
-const dataFormatter = new Jsona();
+const dataFormatter2 = new Jsona();
 const dataFetcher = async (handler) => {
   await Promise.all(
     Object.keys(handler?.data || {}).map(async (key1) => {
@@ -36,7 +36,7 @@ const dataFetcher = async (handler) => {
                 handler.data[key1];
               const params = `?page[size]=${limit}&sort=${sort_by}&${filters}`;
               const res = await CONTENTAPI.getContents(data.id, params);
-              const dataHandler = dataFormatter.deserialize(res);
+              const dataHandler = dataFormatter2.deserialize(res);
               data.contents = clean(dataHandler);
               const { meta } = res;
               delete meta?.links;
@@ -45,12 +45,12 @@ const dataFetcher = async (handler) => {
             }
             if (data?.type === "forms") {
               const res = await FORMAPI.findForm(data.id, "?include=blueprint");
-              const dataHandler = dataFormatter.deserialize(res);
+              const dataHandler = dataFormatter2.deserialize(res);
               data.fields = clean(dataHandler);
             }
             if (data?.type === "taxonomies") {
               const res = await TAXONOMYAPI.findTaxonomy(data.id);
-              const dataHandler = dataFormatter.deserialize(res);
+              const dataHandler = dataFormatter2.deserialize(res);
               data.taxonomy = clean(dataHandler);
             }
             clean(data);
@@ -85,7 +85,7 @@ export async function iteratePage(page) {
 }
 export async function pagesPath() {
   const pagesHandler = await PAGEAPI.getPages();
-  const pages = dataFormatter.deserialize(pagesHandler);
+  const pages = dataFormatter2.deserialize(pagesHandler);
   let allData = pages;
   let { last_page = 1 } = pagesHandler?.meta || {};
   let current_page = 1;
@@ -94,14 +94,14 @@ export async function pagesPath() {
     const pagesHandler = await PAGEAPI.getPages(
       `?page[number]=${current_page}`,
     );
-    const pages = dataFormatter.deserialize(pagesHandler);
+    const pages = dataFormatter2.deserialize(pagesHandler);
     allData = [...allData, ...pages];
   }
   return allData;
 }
 export async function contentEntriesPath(content) {
   const contentsHandler = await CONTENTAPI.getContents(content);
-  const contents = dataFormatter.deserialize(contentsHandler);
+  const contents = dataFormatter2.deserialize(contentsHandler);
   let allData = contents;
   let { last_page = 1 } = contentsHandler?.meta || {};
   let current_page = 1;
@@ -111,7 +111,7 @@ export async function contentEntriesPath(content) {
       content,
       `?page[number]=${current_page}`,
     );
-    const contents = dataFormatter.deserialize(contentsHandler);
+    const contents = dataFormatter2.deserialize(contentsHandler);
     allData = [...allData, ...contents];
   }
   return allData;
