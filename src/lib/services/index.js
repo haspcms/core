@@ -1,85 +1,85 @@
-// import Jsona from "jsona";
-// import { CONTENTAPI, FORMAPI, PAGEAPI, TAXONOMYAPI } from "../api";
-// const dataFormatter = new Jsona();
-// const dataFetcher = async (handler) => {
-//   await Promise.all(
-//     Object.keys(handler?.data || {}).map(async (key1) => {
-//       return await Promise.all(
-//         Object.keys(handler?.data?.[key1] || {}).map(async (key2) => {
-//           if (
-//             key2.includes("preload") ||
-//             key2 === "collection" ||
-//             key2 === "collection1" ||
-//             key2 === "collection2" ||
-//             key2 === "collection3" ||
-//             key2 === "collection4" ||
-//             key2 === "taxonomy" ||
-//             key2 === "form"
-//           ) {
-//             const data = handler?.data?.[key1]?.[key2];
-//             if (data?.type === "contents") {
-//               const filters = Object.keys(handler?.data?.[key1])
-//                 .filter((n) => n.includes("filter_taxonomy"))
-//                 .map((n) => {
-//                   const taxonomy = handler.data[key1][n];
-//                   // Check params if multiple
-//                   const params =
-//                     typeof taxonomy?.length === "number"
-//                       ? taxonomy?.map((n2) => n2.id).join(",")
-//                       : taxonomy?.id;
-//                   return `filter[taxonomies][${n
-//                     .replace("filter_taxonomy_", "")
-//                     .replaceAll("_", "-")}]=${params}`;
-//                 })
-//                 .join("&");
-//               const { limit = 10, sort_by = "published_at" } =
-//                 handler.data[key1];
-//               const params = `?page[size]=${limit}&sort=${sort_by}&${filters}`;
-//               const res = await CONTENTAPI.getContents(data.id, params);
-//               const dataHandler = dataFormatter.deserialize(res);
-//               data.contents = clean(dataHandler);
-//               const { meta } = res;
-//               delete meta?.links;
-//               delete meta?.path;
-//               data.contentsMeta = meta;
-//             }
-//             if (data?.type === "forms") {
-//               const res = await FORMAPI.findForm(data.id, "?include=blueprint");
-//               const dataHandler = dataFormatter.deserialize(res);
-//               data.fields = clean(dataHandler);
-//             }
-//             if (data?.type === "taxonomies") {
-//               const res = await TAXONOMYAPI.findTaxonomy(data.id);
-//               const dataHandler = dataFormatter.deserialize(res);
-//               data.taxonomy = clean(dataHandler);
-//             }
-//             clean(data);
-//           }
-//         }),
-//       );
-//     }),
-//   );
+import Jsona from "jsona";
+import { CONTENTAPI, FORMAPI, TAXONOMYAPI } from "../api";
+const dataFormatter = new Jsona();
+const dataFetcher = async (handler) => {
+  await Promise.all(
+    Object.keys(handler?.data || {}).map(async (key1) => {
+      return await Promise.all(
+        Object.keys(handler?.data?.[key1] || {}).map(async (key2) => {
+          if (
+            key2.includes("preload") ||
+            key2 === "collection" ||
+            key2 === "collection1" ||
+            key2 === "collection2" ||
+            key2 === "collection3" ||
+            key2 === "collection4" ||
+            key2 === "taxonomy" ||
+            key2 === "form"
+          ) {
+            const data = handler?.data?.[key1]?.[key2];
+            if (data?.type === "contents") {
+              const filters = Object.keys(handler?.data?.[key1])
+                .filter((n) => n.includes("filter_taxonomy"))
+                .map((n) => {
+                  const taxonomy = handler.data[key1][n];
+                  // Check params if multiple
+                  const params =
+                    typeof taxonomy?.length === "number"
+                      ? taxonomy?.map((n2) => n2.id).join(",")
+                      : taxonomy?.id;
+                  return `filter[taxonomies][${n
+                    .replace("filter_taxonomy_", "")
+                    .replaceAll("_", "-")}]=${params}`;
+                })
+                .join("&");
+              const { limit = 10, sort_by = "published_at" } =
+                handler.data[key1];
+              const params = `?page[size]=${limit}&sort=${sort_by}&${filters}`;
+              const res = await CONTENTAPI.getContents(data.id, params);
+              const dataHandler = dataFormatter.deserialize(res);
+              data.contents = clean(dataHandler);
+              const { meta } = res;
+              delete meta?.links;
+              delete meta?.path;
+              data.contentsMeta = meta;
+            }
+            if (data?.type === "forms") {
+              const res = await FORMAPI.findForm(data.id, "?include=blueprint");
+              const dataHandler = dataFormatter.deserialize(res);
+              data.fields = clean(dataHandler);
+            }
+            if (data?.type === "taxonomies") {
+              const res = await TAXONOMYAPI.findTaxonomy(data.id);
+              const dataHandler = dataFormatter.deserialize(res);
+              data.taxonomy = clean(dataHandler);
+            }
+            clean(data);
+          }
+        }),
+      );
+    }),
+  );
 
-//   return replaceAndFormatMediaConvertions(
-//     handler,
-//     "blueprintData",
-//     "mediaHandler",
-//   );
-// };
-// const clean = (data) => {
-//   delete data?.links;
-//   delete data?.meta;
-//   delete data?.relationshipNames;
-//   delete data?.relationships;
-//   return data;
-// };
-// export async function iterateBlock(blocks) {
-//   return await Promise.all(
-//     blocks.map(async (block) => {
-//       return await dataFetcher(block);
-//     }),
-//   );
-// }
+  return replaceAndFormatMediaConvertions(
+    handler,
+    "blueprintData",
+    "mediaHandler",
+  );
+};
+const clean = (data) => {
+  delete data?.links;
+  delete data?.meta;
+  delete data?.relationshipNames;
+  delete data?.relationships;
+  return data;
+};
+export async function iterateBlock(blocks) {
+  return await Promise.all(
+    blocks.map(async (block) => {
+      return await dataFetcher(block);
+    }),
+  );
+}
 // export async function iteratePage(page) {
 //   return await dataFetcher(page);
 // }
