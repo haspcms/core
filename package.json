@@ -13,7 +13,6 @@
       "require": "./dist/core.umd.cjs"
     }
   },
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "prebuild": "rm -rf dist",
