@@ -15,6 +15,7 @@ export const paths = async () => {
   const pages = await pagesPath();
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
+  console.log("process.cwd()", process.cwd());
   // const contentTypes = ["rooms", "services", "articles"]; // Add your content types here
   const contentTypes = ["article"];
 
