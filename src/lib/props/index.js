@@ -2,7 +2,7 @@ import { Jsona } from "jsona";
 console.log("props", Jsona);
 
 import { PAGEAPI } from "../api";
-import { sortBlocks } from "../helpers";
+import { loadConfig, sortBlocks } from "../helpers";
 import {
   contentEntriesPath,
   iterateBlock,
@@ -16,6 +16,8 @@ export const paths = async () => {
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
   console.log("process.cwd()", process.cwd());
+  const config = loadConfig();
+  console.log({ config });
   // const contentTypes = ["rooms", "services", "articles"]; // Add your content types here
   const contentTypes = ["article"];
 
