@@ -2,10 +2,7 @@
 
 import rc from "rc";
 
-var configuration = rc("hasp", {
-  // Default configuration goes here
-  port: 2468,
-});
+var configuration = rc("hasp");
 
 console.log(JSON.stringify(configuration));
 console.log({ configuration });
