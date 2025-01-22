@@ -7,7 +7,6 @@
 //   try {
 //     await fs.access(configPath);
 
-//     // Using dynamic import for compatibility with ESM
 //     const configModule = await import(configPath);
 //     const config = configModule.default || configModule;
 
