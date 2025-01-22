@@ -2,10 +2,11 @@
 
 import rc from "rc";
 
+// Load configuration
 var configuration = rc("hasp");
 
-console.log(JSON.stringify(configuration));
-console.log({ configuration });
+console.log(JSON.stringify(configuration, null, 2)); // Display configuration as a JSON string
+console.log({ configuration }); // Log configuration as an object
 
 console.log("HASP Core started.");
 
