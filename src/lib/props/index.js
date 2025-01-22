@@ -12,6 +12,8 @@ const dataFormatter = new Jsona();
 
 import rc from "rc";
 
+const config = rc("hasp");
+
 // const configString = JSON.stringify(confJSON, null, 2);
 // console.log({ configString });
 
@@ -26,7 +28,7 @@ export const paths = async () => {
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
   // const contentTypes = ["rooms", "services", "articles"]; // Add your content types here
-  const config = rc("hasp");
+
   const contentTypes = config?.contents;
 
   const contentData = await Promise.all(
