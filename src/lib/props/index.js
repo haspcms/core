@@ -11,12 +11,12 @@ console.log("props", Jsona);
 const dataFormatter = new Jsona();
 
 // Now you can work with configObject as a regular JavaScript object
+const config = loadConfig();
 
 export const paths = async () => {
   const pages = await pagesPath();
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
-  const config = loadConfig();
   const contentTypes = config?.contents;
   console.log(contentTypes);
 
