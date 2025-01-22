@@ -1,12 +1,12 @@
 import { Jsona } from "jsona";
 import { PAGEAPI } from "../api";
-import { sortBlocks } from "../helpers";
 import {
   contentEntriesPath,
   iterateBlock,
   iteratePage,
   pagesPath,
 } from "../services";
+import { sortBlocks } from "../utils";
 console.log("props", Jsona);
 const dataFormatter = new Jsona();
 
