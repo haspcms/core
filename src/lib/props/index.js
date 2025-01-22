@@ -12,8 +12,8 @@ const dataFormatter = new Jsona();
 
 import rc from "rc";
 var confJSON = rc("hasp");
-const config = JSON.stringify(confJSON, null, 2);
-console.log({ config });
+// const config = JSON.stringify(confJSON, null, 2);
+// console.log({ config });
 
 export const paths = async () => {
   const pages = await pagesPath();
