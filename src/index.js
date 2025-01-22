@@ -10,7 +10,7 @@
 
 import { cosmiconfig } from "cosmiconfig";
 // ...
-const explorer = cosmiconfig(moduleName);
+const explorer = cosmiconfig("hasp");
 console.log({ explorer });
 
 console.log("[INFO] HASP Core started.");
