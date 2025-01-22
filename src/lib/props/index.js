@@ -19,8 +19,9 @@ export const paths = async () => {
   const pages = await pagesPath();
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
-  // const contentTypes = ["rooms", "services", "articles"]; // Add your content types here
-  const contentTypes = ["article"];
+  // const contentTypes = ["article"];
+  const contentTypes = confJSON?.contents;
+  console.log({ contentTypes });
 
   const contentData = await Promise.all(
     contentTypes.map(async (contentType) => {
