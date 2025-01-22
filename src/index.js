@@ -1,8 +1,5 @@
-// var confJSON = rc("hasp");
-// const config = JSON.stringify(confJSON, null, 2);
-// console.log({ config });
-
-// console.log("contents:", config?.contents);
-console.log("[INFO] HASP Core started.");
+import chalk from "chalk";
+const startMessage = `${chalk.bgCyan("[INFO]")} HASP Core started.`;
+console.log(startMessage);
 
 export * from "./lib";
