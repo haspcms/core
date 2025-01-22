@@ -52,6 +52,7 @@ export class PAGEAPI {
       );
       return res.data;
     } catch (error) {
+      console.error(error);
       return null;
     }
   }

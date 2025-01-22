@@ -29,8 +29,6 @@ export const paths = async () => {
   const config = rc("hasp");
   const contentTypes = config?.contents;
 
-  console.log(configObject?.contents);
-
   const contentData = await Promise.all(
     contentTypes.map(async (contentType) => {
       return await contentEntriesPath(contentType);
