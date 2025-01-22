@@ -1,8 +1,9 @@
-import findupSync from "findup-sync";
+// import findupSync from "findup-sync";
 
 console.log("HASP Core started.");
-const filePath = findupSync("filename");
-console.log({ filePath });
+
+// const filePath = findupSync("filename");
+// console.log({ filePath });
 
 // import { promises as fs } from "fs";
 
