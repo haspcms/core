@@ -29,8 +29,8 @@ export const paths = async () => {
 
   // const contentTypes = ["rooms", "services", "articles"]; // Add your content types here
 
-  const contentTypes = configObject?.contents;
-  console.log({ contentTypes });
+  const contentTypes = ["articles"];
+  // console.log(configObject?.contents);
 
   const contentData = await Promise.all(
     contentTypes.map(async (contentType) => {
