@@ -1,5 +1,13 @@
 // import findupSync from "findup-sync";
 
+import rc from "rc";
+
+var configuration = rc("hasp.config.js", {
+  // Default configuration goes here
+  port: 2468,
+});
+console.log({ configuration });
+
 console.log("HASP Core started.");
 
 // const filePath = findupSync("filename");
