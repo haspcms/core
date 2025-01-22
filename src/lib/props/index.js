@@ -1,36 +1,26 @@
 import { Jsona } from "jsona";
 import { PAGEAPI } from "../api";
+import { sortBlocks } from "../helpers";
 import {
   contentEntriesPath,
   iterateBlock,
   iteratePage,
   pagesPath,
 } from "../services";
-import { sortBlocks } from "../utils";
 console.log("props", Jsona);
 const dataFormatter = new Jsona();
 
 import rc from "rc";
-
-const config = rc("hasp");
-
-const configString = JSON.stringify(config, null, 2);
-console.log({ configString });
-
-// Access the config as a JavaScript object
-const configObject = JSON.parse(configString);
-console.log({ configObject });
-
-// Now you can work with configObject as a regular JavaScript object
+var confJSON = rc("hasp");
+const config = JSON.stringify(confJSON, null, 2);
+console.log({ config });
 
 export const paths = async () => {
   const pages = await pagesPath();
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
   // const contentTypes = ["rooms", "services", "articles"]; // Add your content types here
-
-  const contentTypes = ["articles"];
-  // console.log(configObject?.contents);
+  const contentTypes = ["article"];
 
   const contentData = await Promise.all(
     contentTypes.map(async (contentType) => {
