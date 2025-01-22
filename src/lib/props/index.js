@@ -14,12 +14,12 @@ import rc from "rc";
 
 const config = rc("hasp");
 
-// const configString = JSON.stringify(confJSON, null, 2);
-// console.log({ configString });
+const configString = JSON.stringify(config, null, 2);
+console.log({ configString });
 
-// // Access the config as a JavaScript object
-// const configObject = JSON.parse(configString);
-// console.log({ configObject });
+// Access the config as a JavaScript object
+const configObject = JSON.parse(configString);
+console.log({ configObject });
 
 // Now you can work with configObject as a regular JavaScript object
 
@@ -29,7 +29,8 @@ export const paths = async () => {
 
   // const contentTypes = ["rooms", "services", "articles"]; // Add your content types here
 
-  const contentTypes = config?.contents;
+  const contentTypes = configObject?.contents;
+  console.log({ contentTypes });
 
   const contentData = await Promise.all(
     contentTypes.map(async (contentType) => {
