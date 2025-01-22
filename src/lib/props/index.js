@@ -11,17 +11,18 @@ console.log("props", Jsona);
 const dataFormatter = new Jsona();
 
 import rc from "rc";
-var confJSON = rc("hasp");
+const confJSON = rc("hasp");
 // const config = JSON.stringify(confJSON, null, 2);
 // console.log({ config });
+console.log({ confJSON });
 
 export const paths = async () => {
   const pages = await pagesPath();
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
-  // const contentTypes = ["article"];
-  const contentTypes = confJSON?.contents;
-  console.log({ contentTypes });
+  const contentTypes = ["article"];
+  // const contentTypes = confJSON?.contents;
+  // console.log({ contentTypes });
 
   const contentData = await Promise.all(
     contentTypes.map(async (contentType) => {
