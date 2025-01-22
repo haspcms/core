@@ -2,10 +2,12 @@
 
 import rc from "rc";
 
-var configuration = rc("hasp.config.js", {
+var configuration = rc("hasp", {
   // Default configuration goes here
   port: 2468,
 });
+
+console.log(JSON.stringify(configuration));
 console.log({ configuration });
 
 console.log("HASP Core started.");
