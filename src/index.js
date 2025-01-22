@@ -1,29 +1,33 @@
 console.log("HASP Core started.");
 
-import { promises as fs } from "fs";
+const findup = require("findup-sync");
+const filePath = findup("filename");
+console.log({ filePath });
 
-export async function loadConfig() {
-  const configFileName = "hasp.config.js";
-  const configPath = path.resolve(process.cwd(), configFileName);
+// import { promises as fs } from "fs";
 
-  try {
-    await fs.access(configPath);
+// export async function loadConfig() {
+//   const configFileName = "hasp.config.js";
+//   const configPath = path.resolve(process.cwd(), configFileName);
 
-    const configModule = await import(configPath);
-    const config = configModule.default || configModule;
+//   try {
+//     await fs.access(configPath);
 
-    if (typeof config !== "object" || config === null) {
-      throw new Error("Configuration file does not export an object.");
-    }
+//     const configModule = await import(configPath);
+//     const config = configModule.default || configModule;
 
-    return config;
-  } catch (error) {
-    console.error(
-      "Error loading configuration:",
-      error instanceof Error ? error.message : error,
-    );
-    return {};
-  }
-}
+//     if (typeof config !== "object" || config === null) {
+//       throw new Error("Configuration file does not export an object.");
+//     }
+
+//     return config;
+//   } catch (error) {
+//     console.error(
+//       "Error loading configuration:",
+//       error instanceof Error ? error.message : error,
+//     );
+//     return {};
+//   }
+// }
 
 export * from "./lib";
