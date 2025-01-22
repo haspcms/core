@@ -8,7 +8,7 @@ var configuration = rc("hasp");
 console.log(JSON.stringify(configuration, null, 2)); // Display configuration as a JSON string
 console.log({ configuration }); // Log configuration as an object
 
-console.log("HASP Core started.");
+console.log("[INFO] HASP Core started.");
 
 // const filePath = findupSync("filename");
 // console.log({ filePath });
