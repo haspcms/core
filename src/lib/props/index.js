@@ -6,7 +6,7 @@ import {
   iteratePage,
   pagesPath,
 } from "../services";
-import { sortBlocks } from "../utils";
+import { loadConfig, sortBlocks } from "../utils";
 console.log("props", Jsona);
 const dataFormatter = new Jsona();
 
@@ -16,8 +16,8 @@ export const paths = async () => {
   const pages = await pagesPath();
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
-  const contentTypes = configObject?.contents;
-
+  const config = loadConfig();
+  const contentTypes = config?.contents;
   console.log(contentTypes);
 
   const contentData = await Promise.all(
