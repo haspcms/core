@@ -1,12 +1,17 @@
 // import findupSync from "findup-sync";
 
-import rc from "rc";
+// import rc from "rc";
 
-// Load configuration
-var configuration = rc("hasp");
+// // Load configuration
+// var configuration = rc("hasp");
 
-console.log(JSON.stringify(configuration, null, 2)); // Display configuration as a JSON string
-console.log({ configuration }); // Log configuration as an object
+// console.log(JSON.stringify(configuration, null, 2)); // Display configuration as a JSON string
+// console.log({ configuration }); // Log configuration as an object
+
+import { cosmiconfig } from "cosmiconfig";
+// ...
+const explorer = cosmiconfig(moduleName);
+console.log({ explorer });
 
 console.log("[INFO] HASP Core started.");
 

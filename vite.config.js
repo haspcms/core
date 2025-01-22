@@ -19,6 +19,7 @@ export default defineConfig({
         "fs",
         "path",
         "rc",
+        "cosmiconfig",
       ],
       output: {
         // Provide global variables for UMD builds
