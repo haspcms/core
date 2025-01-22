@@ -13,7 +13,7 @@ const dataFormatter = new Jsona();
 import rc from "rc";
 const confJSON = rc("hasp");
 // const config = JSON.stringify(confJSON, null, 2);
-// console.log({ config });
+// console.log({ config }); x
 console.log({ confJSON });
 
 export const paths = async () => {
