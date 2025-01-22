@@ -9,7 +9,6 @@ export default defineConfig({
       fileName: "core",
     },
     rollupOptions: {
-      // Externalize peer dependencies to prevent bundling them
       external: [
         "axios",
         "react",
@@ -19,16 +18,15 @@ export default defineConfig({
         "fs",
         "path",
         "rc",
-        "cosmiconfig",
       ],
       output: {
-        // Provide global variables for UMD builds
         globals: {
           axios: "axios",
           react: "React",
           "react-dom": "ReactDOM",
           swr: "SWR",
           jsona: "Jsona",
+          rc: "rc",
         },
       },
     },
