@@ -1,7 +1,7 @@
-console.log("HASP Core started.");
+import findupSync from "findup-sync";
 
-const findup = require("findup-sync");
-const filePath = findup("filename");
+console.log("HASP Core started.");
+const filePath = findupSync("filename");
 console.log({ filePath });
 
 // import { promises as fs } from "fs";
