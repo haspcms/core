@@ -16,9 +16,6 @@ const confJSON = rc("hasp");
 // Use flatted to safely stringify the object, handling circular references
 const config = stringify(confJSON); // Handles circular references
 
-// Now you can log the safely stringified configuration
-console.log({ config });
-
 const dataFormatter = new Jsona();
 
 export const paths = async () => {
