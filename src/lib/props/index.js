@@ -24,6 +24,8 @@ export const paths = async () => {
 
   // Extract content types from the configuration
   const contentTypes = config?.contents || [];
+  console.log({ confJSON });
+  console.log({ config });
   console.log({ contentTypes });
 
   const contentData = await Promise.all(
