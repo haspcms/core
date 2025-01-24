@@ -1,4 +1,6 @@
 import { Jsona } from "jsona";
+import cloneDeep from "lodash/cloneDeep";
+import rc from "rc";
 import { PAGEAPI } from "../api";
 import {
   contentEntriesPath,
@@ -7,39 +9,19 @@ import {
   pagesPath,
 } from "../services";
 import { sortBlocks } from "../utils";
-console.log("props", Jsona);
-const dataFormatter = new Jsona();
 
-// import rc from "rc";
-// const confJSON = rc("hasp");
-// // const config = JSON.stringify(confJSON, null, 2);
-// // console.log({ config }); x
-// console.log({ confJSON });
-
-// import { stringify } from "flatted";
-// import rc from "rc";
-
-// const confJSON = rc("hasp");
-// const config = stringify(confJSON, null, 2); // Handles circular references
-// console.log({ config });
-
-import cloneDeep from "lodash/cloneDeep";
-import rc from "rc";
-
-// Get the configuration object
+// Create a deep clone of the configuration to avoid circular references
 const confJSON = rc("hasp");
+const clonedConfJSON = cloneDeep(confJSON); // Clone the configuration
+
+const dataFormatter = new Jsona();
 
 export const paths = async () => {
   const pages = await pagesPath();
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
-  // const contentTypes = ["article"];
-  // Create a deep clone of the object using Lodash's cloneDeep
-  const clonedConfJSON = cloneDeep(confJSON);
-
-  // Now you can use the cloned object without circular reference issues
-  // console.log(clonedConfJSON);
-  const contentTypes = clonedConfJSON?.contents;
+  // Extract content types from the cloned configuration
+  const contentTypes = clonedConfJSON?.contents || [];
   console.log({ contentTypes });
 
   const contentData = await Promise.all(
