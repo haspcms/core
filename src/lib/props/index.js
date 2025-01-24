@@ -29,18 +29,18 @@ import rc from "rc";
 // Get the configuration object
 const confJSON = rc("hasp");
 
-// Create a deep clone of the object using Lodash's cloneDeep
-const clonedConfJSON = cloneDeep(confJSON);
-
-// Now you can use the cloned object without circular reference issues
-console.log(clonedConfJSON);
-
 export const paths = async () => {
   const pages = await pagesPath();
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
   // const contentTypes = ["article"];
+  // Create a deep clone of the object using Lodash's cloneDeep
+  const clonedConfJSON = cloneDeep(confJSON);
+
+  // Now you can use the cloned object without circular reference issues
+  // console.log(clonedConfJSON);
   const contentTypes = clonedConfJSON?.contents;
+  console.log({ contentTypes });
 
   const contentData = await Promise.all(
     contentTypes.map(async (contentType) => {
