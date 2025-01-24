@@ -16,12 +16,24 @@ const dataFormatter = new Jsona();
 // // console.log({ config }); x
 // console.log({ confJSON });
 
-import { stringify } from "flatted";
+// import { stringify } from "flatted";
+// import rc from "rc";
+
+// const confJSON = rc("hasp");
+// const config = stringify(confJSON, null, 2); // Handles circular references
+// console.log({ config });
+
+import cloneDeep from "lodash/cloneDeep";
 import rc from "rc";
 
+// Get the configuration object
 const confJSON = rc("hasp");
-const config = stringify(confJSON, null, 2); // Handles circular references
-console.log({ config });
+
+// Create a deep clone of the object using Lodash's cloneDeep
+const clonedConfJSON = cloneDeep(confJSON);
+
+// Now you can use the cloned object without circular reference issues
+console.log(clonedConfJSON);
 
 export const paths = async () => {
   const pages = await pagesPath();

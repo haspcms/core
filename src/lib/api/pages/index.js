@@ -51,8 +51,8 @@ export class PAGEAPI {
         },
       );
       return res.data;
+      // eslint-disable-next-line no-unused-vars
     } catch (error) {
-      console.error(error);
       return null;
     }
   }
