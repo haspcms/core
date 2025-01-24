@@ -10,11 +10,18 @@ import { sortBlocks } from "../utils";
 console.log("props", Jsona);
 const dataFormatter = new Jsona();
 
+// import rc from "rc";
+// const confJSON = rc("hasp");
+// // const config = JSON.stringify(confJSON, null, 2);
+// // console.log({ config }); x
+// console.log({ confJSON });
+
+import { stringify } from "flatted";
 import rc from "rc";
+
 const confJSON = rc("hasp");
-// const config = JSON.stringify(confJSON, null, 2);
-// console.log({ config }); x
-console.log({ confJSON });
+const config = stringify(confJSON, null, 2); // Handles circular references
+console.log({ config });
 
 export const paths = async () => {
   const pages = await pagesPath();
