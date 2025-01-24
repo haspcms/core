@@ -23,7 +23,6 @@ export const paths = async () => {
   const contentTypes = [...arrayCopy];
 
   console.log({ confJSON });
-  // console.log({ config });
   console.log({ contentTypes });
   console.log({ arrayCopy });
 
