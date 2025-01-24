@@ -10,7 +10,6 @@ import {
 import { sortBlocks } from "../utils";
 
 const haspConfig = rc("hasp");
-
 const dataFormatter = new Jsona();
 
 export const paths = async () => {
