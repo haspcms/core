@@ -9,7 +9,7 @@ import {
 } from "../services";
 import { sortBlocks } from "../utils";
 
-const confJSON = rc("hasp");
+// const confJSON = rc("hasp");
 
 // const config = stringify(confJSON);
 // const config = stringify(confJSON);
@@ -20,12 +20,13 @@ export const paths = async () => {
   const pages = await pagesPath();
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
+  const confJSON = rc("hasp");
   const arrayCopy = confJSON?.contents ? [...confJSON.contents] : [];
-  const contentTypes = [...arrayCopy];
+  // const contentTypes = [...arrayCopy];
 
-  console.log({ confJSON });
-  console.log({ contentTypes });
-  console.log({ arrayCopy });
+  // console.log({ confJSON });
+  // console.log({ contentTypes });
+  // console.log({ arrayCopy });
   // console.log({ arrayCopy });
 
   const contentData = await Promise.all(
