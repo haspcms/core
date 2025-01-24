@@ -23,7 +23,7 @@ export const paths = async () => {
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
   // Extract content types from the configuration
-  const contentTypes = confJSON?.contents || [];
+  const contentTypes = config?.contents || [];
   console.log({ contentTypes });
 
   const contentData = await Promise.all(
