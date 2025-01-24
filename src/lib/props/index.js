@@ -40,8 +40,7 @@ export const paths = async () => {
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
   // const contentTypes = ["article"];
-  const contentTypes = clonedConfJSON?.contentTypes;
-  console.log({ contentTypes });
+  const contentTypes = clonedConfJSON?.contents;
 
   const contentData = await Promise.all(
     contentTypes.map(async (contentType) => {
