@@ -21,9 +21,12 @@ export const paths = async () => {
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
   const contentTypes = config?.contents || [];
+  const arrayCopy = confJSON?.contents ? [...confJSON.contents] : [];
+
   console.log({ confJSON });
   console.log({ config });
   console.log({ contentTypes });
+  console.log(arrayCopy);
 
   const contentData = await Promise.all(
     contentTypes.map(async (contentType) => {
