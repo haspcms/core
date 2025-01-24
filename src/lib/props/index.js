@@ -12,6 +12,7 @@ import { sortBlocks } from "../utils";
 const confJSON = rc("hasp");
 
 // const config = stringify(confJSON);
+// const config = stringify(confJSON);
 
 const dataFormatter = new Jsona();
 
