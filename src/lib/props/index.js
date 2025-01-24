@@ -26,6 +26,7 @@ export const paths = async () => {
   console.log({ confJSON });
   console.log({ contentTypes });
   console.log({ arrayCopy });
+  // console.log({ arrayCopy });
 
   const contentData = await Promise.all(
     arrayCopy.map(async (contentType) => {
