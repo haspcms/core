@@ -1,5 +1,5 @@
+import { stringify } from "flatted"; // Import from flatted to handle circular references
 import { Jsona } from "jsona";
-import cloneDeep from "lodash/cloneDeep";
 import rc from "rc";
 import { PAGEAPI } from "../api";
 import {
@@ -10,9 +10,14 @@ import {
 } from "../services";
 import { sortBlocks } from "../utils";
 
-// Create a deep clone of the configuration to avoid circular references
+// Get the configuration object
 const confJSON = rc("hasp");
-const clonedConfJSON = cloneDeep(confJSON); // Clone the configuration
+
+// Use flatted to safely stringify the object, handling circular references
+const config = stringify(confJSON); // Handles circular references
+
+// Now you can log the safely stringified configuration
+console.log({ config });
 
 const dataFormatter = new Jsona();
 
@@ -20,8 +25,8 @@ export const paths = async () => {
   const pages = await pagesPath();
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
-  // Extract content types from the cloned configuration
-  const contentTypes = clonedConfJSON?.contents || [];
+  // Extract content types from the configuration
+  const contentTypes = confJSON?.contents || [];
   console.log({ contentTypes });
 
   const contentData = await Promise.all(
