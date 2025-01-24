@@ -10,11 +10,9 @@ import {
 } from "../services";
 import { sortBlocks } from "../utils";
 
-// Get the configuration object
 const confJSON = rc("hasp");
 
-// Use flatted to safely stringify the object, handling circular references
-const config = stringify(confJSON); // Handles circular references
+const config = stringify(confJSON);
 
 const dataFormatter = new Jsona();
 
@@ -22,7 +20,6 @@ export const paths = async () => {
   const pages = await pagesPath();
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
-  // Extract content types from the configuration
   const contentTypes = config?.contents || [];
   console.log({ confJSON });
   console.log({ config });
