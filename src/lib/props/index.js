@@ -1,4 +1,3 @@
-import { stringify } from "flatted"; // Import from flatted to handle circular references
 import { Jsona } from "jsona";
 import rc from "rc";
 import { PAGEAPI } from "../api";
@@ -10,9 +9,7 @@ import {
 } from "../services";
 import { sortBlocks } from "../utils";
 
-const confJSON = rc("hasp");
-
-const config = stringify(confJSON);
+const haspConfig = rc("hasp");
 
 const dataFormatter = new Jsona();
 
@@ -20,13 +17,10 @@ export const paths = async () => {
   const pages = await pagesPath();
   const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
-  const contentTypes = config?.contents || [];
-  const arrayCopy = confJSON?.contents ? [...confJSON.contents] : [];
+  const contentTypes = haspConfig?.contents ? [...haspConfig.contents] : [];
 
-  console.log({ confJSON });
-  console.log({ config });
+  console.log({ haspConfig });
   console.log({ contentTypes });
-  console.log({ arrayCopy });
 
   const contentData = await Promise.all(
     contentTypes.map(async (contentType) => {
