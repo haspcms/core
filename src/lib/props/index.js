@@ -9,48 +9,31 @@ import {
 } from "../services";
 import { sortBlocks } from "../utils";
 
-// const confJSON = rc("hasp");
-
-// const config = stringify(confJSON);
-// const config = stringify(confJSON);
-
 const dataFormatter = new Jsona();
 
 export const paths = async () => {
   try {
     const pages = await pagesPath();
     const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
-
     const confJSON = rc("hasp");
 
-    // Ensure confJSON is valid before stringifying
     if (!confJSON || typeof confJSON !== "object") {
       console.error("Invalid confJSON:", confJSON);
       return { paths: [], fallback: false };
     }
-
-    // Handle Circular References and Non-Serializable Values
     const str = JSON.stringify(confJSON, getCircularReplacer(), 2);
     console.log("Configuration JSON:", str);
-
-    // Ensure contentTypes is initialized properly
     const contentTypes = Array.isArray(confJSON?.contents)
       ? [...confJSON.contents]
       : [];
 
     console.log({ contentTypes });
-
-    // Fetch content data safely
     const contentData = await Promise.all(
       contentTypes.map(async (contentType) => {
         return await contentEntriesPath(contentType);
       }),
     );
-
-    // Merge pages and content data
     const pathsHandler = [...filteredPages, ...contentData.flat()];
-
-    // Generate paths while ensuring route_url is valid
     const paths = pathsHandler
       .filter((page) => typeof page.route_url === "string")
       .map((page) => ({
@@ -60,7 +43,6 @@ export const paths = async () => {
     return { paths, fallback: false };
     // eslint-disable-next-line no-unused-vars
   } catch (error) {
-    // console.error("Error in paths function:", error);
     return { paths: [], fallback: false };
   }
 };
@@ -113,8 +95,4 @@ export const props = async (context) => {
       notFound: true,
     };
   }
-};
-
-export const consoleProps = () => {
-  console.log("console props");
 };

@@ -1,6 +1,5 @@
 import { Jsona } from "jsona";
 import { CONTENTAPI, FORMAPI, PAGEAPI, TAXONOMYAPI } from "../api";
-console.log("services", Jsona);
 const dataFormatter2 = new Jsona();
 export const dataFetcher = async (handler) => {
   await Promise.all(
