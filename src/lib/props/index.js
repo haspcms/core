@@ -38,6 +38,8 @@ export const paths = async () => {
       ? [...confJSON.contents]
       : [];
 
+    console.log({ contentTypes });
+
     // Fetch content data safely
     const contentData = await Promise.all(
       contentTypes.map(async (contentType) => {
