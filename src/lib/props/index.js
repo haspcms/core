@@ -1,4 +1,4 @@
-import Jsona from "jsona";
+import { Jsona } from "jsona";
 import rc from "rc";
 import { PAGEAPI } from "../api";
 import {
@@ -8,6 +8,11 @@ import {
   pagesPath,
 } from "../services";
 import { sortBlocks } from "../utils";
+
+// const confJSON = rc("hasp");
+
+// const config = stringify(confJSON);
+// const config = stringify(confJSON);
 
 const dataFormatter = new Jsona();
 
