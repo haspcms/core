@@ -58,8 +58,9 @@ export const paths = async () => {
       }));
 
     return { paths, fallback: false };
+    // eslint-disable-next-line no-unused-vars
   } catch (error) {
-    console.error("Error in paths function:", error);
+    // console.error("Error in paths function:", error);
     return { paths: [], fallback: false };
   }
 };
