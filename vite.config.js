@@ -27,6 +27,8 @@ export default defineConfig({
           swr: "SWR",
           jsona: "Jsona",
           rc: "rc",
+          fs: "fs",
+          path: "path",
         },
       },
     },
