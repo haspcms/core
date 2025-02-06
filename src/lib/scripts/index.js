@@ -6,7 +6,6 @@ import { Jsona } from "jsona";
 import rc from "rc";
 
 // Load environment variables
-// dotenv.config();
 const dataFormatter = new Jsona();
 
 // Load Environment Variables
