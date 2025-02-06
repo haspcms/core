@@ -1,17 +1,15 @@
-import axios from "axios";
-// import dotenv from "dotenv";
-import fs from "fs";
-import https from "https";
-import { Jsona } from "jsona";
-import rc from "rc";
+const dotenv = require("dotenv");
+const fs = require("fs");
+const https = require("https");
+const axios = require("axios").default;
+const { Jsona } = require("jsona");
+const rc = require("rc");
 
-// Load environment variables
+dotenv.config();
 const dataFormatter = new Jsona();
 
 // Load Environment Variables
 const API_BASE = process.env.NEXT_PUBLIC_TENANT_API;
-
-console.log({ API_BASE });
 
 // Load Config
 const confJSON = rc("hasp");
@@ -77,7 +75,7 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
 };
 
 // Main Pre-Build Function
-export const preBuildDevelopment = async () => {
+module.exports.preBuildDevelopment = async () => {
   console.log("🚀 Starting pre-build script...");
 
   console.log("🛠️ Configuration JSON:", JSON.stringify(confJSON, null, 2));
