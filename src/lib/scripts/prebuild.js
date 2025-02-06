@@ -75,7 +75,7 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
 };
 
 // Main Pre-Build Function
-module.exports.preBuildDevelopment = async () => {
+export const preBuildDevelopment = async () => {
   console.log("🚀 Starting pre-build script...");
 
   console.log("🛠️ Configuration JSON:", JSON.stringify(confJSON, null, 2));
