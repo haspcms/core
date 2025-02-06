@@ -1,9 +1,9 @@
-import axios from "axios";
-import dotenv from "dotenv";
-import fs from "fs";
-import https from "https";
-import { Jsona } from "jsona";
-import rc from "rc";
+const dotenv = require("dotenv");
+const fs = require("fs");
+const https = require("https");
+const axios = require("axios").default;
+const { Jsona } = require("jsona");
+const rc = require("rc");
 
 dotenv.config();
 const dataFormatter = new Jsona();
@@ -72,11 +72,12 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
     });
 };
 
-export const preBuildDevelopment = async () => {
+const preBuildDevelopment = async () => {
   console.log("🚀 Starting pre-build script...");
 
   console.log("🛠️ Configuration JSON:", JSON.stringify(confJSON, null, 2));
 
+  // Fetch all prebuild JSONs dynamically
   const prebuildTasks = (confJSON?.prebuildJSONS || []).map(
     async ({ name, endpoint, outputPath, useDeserialization = true }) => {
       const data = await fetchData(endpoint, useDeserialization);
@@ -86,6 +87,7 @@ export const preBuildDevelopment = async () => {
     },
   );
 
+  // Download all images dynamically
   const imageDownloadTasks = (confJSON?.prebuildImages || []).map(
     async ({ url, filename, downloadPath }) => {
       await downloadImage(url, filename, downloadPath);
@@ -95,4 +97,9 @@ export const preBuildDevelopment = async () => {
   await Promise.all([...prebuildTasks, ...imageDownloadTasks]);
 
   console.log("✅ Pre-Build Data & Images Generated Successfully!");
+};
+
+// Main Pre-Build Function
+module.exports = {
+  preBuildDevelopment,
 };
