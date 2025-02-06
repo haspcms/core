@@ -1,9 +1,9 @@
-const dotenv = require("dotenv");
-const fs = require("fs");
-const https = require("https");
-const axios = require("axios").default;
-const { Jsona } = require("jsona");
-const rc = require("rc");
+import axios from "axios";
+import dotenv from "dotenv";
+import fs from "fs";
+import https from "https";
+import { Jsona } from "jsona";
+import rc from "rc";
 
 dotenv.config();
 const dataFormatter = new Jsona();
@@ -73,7 +73,7 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
 };
 
 // Main Pre-Build Function
-module.exports.preBuildDevelopment = async () => {
+export const preBuildDevelopment = async () => {
   console.log("🚀 Starting pre-build script...");
 
   console.log("🛠️ Configuration JSON:", JSON.stringify(confJSON, null, 2));
