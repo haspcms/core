@@ -72,13 +72,11 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
     });
 };
 
-// Main Pre-Build Function
 export const preBuildDevelopment = async () => {
   console.log("🚀 Starting pre-build script...");
 
   console.log("🛠️ Configuration JSON:", JSON.stringify(confJSON, null, 2));
 
-  // Fetch all prebuild JSONs dynamically
   const prebuildTasks = (confJSON?.prebuildJSONS || []).map(
     async ({ name, endpoint, outputPath, useDeserialization = true }) => {
       const data = await fetchData(endpoint, useDeserialization);
@@ -88,7 +86,6 @@ export const preBuildDevelopment = async () => {
     },
   );
 
-  // Download all images dynamically
   const imageDownloadTasks = (confJSON?.prebuildImages || []).map(
     async ({ url, filename, downloadPath }) => {
       await downloadImage(url, filename, downloadPath);
