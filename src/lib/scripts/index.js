@@ -12,6 +12,8 @@ const dataFormatter = new Jsona();
 // Load Environment Variables
 const API_BASE = process.env.NEXT_PUBLIC_TENANT_API;
 
+console.log({ API_BASE });
+
 // Load Config
 const confJSON = rc("hasp");
 
