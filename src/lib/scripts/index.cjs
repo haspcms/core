@@ -8,10 +8,8 @@ const rc = require("rc");
 dotenv.config();
 const dataFormatter = new Jsona();
 
-// Load Environment Variables
 const API_BASE = process.env.NEXT_PUBLIC_TENANT_API;
 
-// Load Config
 const confJSON = rc("hasp");
 
 if (!confJSON || typeof confJSON !== "object") {
