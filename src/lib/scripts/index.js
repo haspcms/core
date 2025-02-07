@@ -17,9 +17,8 @@ if (typeof window === "undefined") {
   // import("rc").then((module) => (rc = module));
 }
 
-const API_BASE = process.env.NEXT_PUBLIC_TENANT_API;
-
 const dataFormatter = new Jsona();
+const API_BASE = process.env.NEXT_PUBLIC_TENANT_API;
 
 console.log({ API_BASE });
 
