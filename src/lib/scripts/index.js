@@ -87,12 +87,12 @@ export const preBuildDevelopment = async () => {
     },
   );
 
-  // Download all images dynamically
-  const imageDownloadTasks = (confJSON?.prebuildImages || []).map(
-    async ({ url, filename, downloadPath }) => {
-      await downloadImage(url, filename, downloadPath);
-    },
-  );
+  // // Download all images dynamically
+  // const imageDownloadTasks = (confJSON?.prebuildImages || []).map(
+  //   async ({ url, filename, downloadPath }) => {
+  //     await downloadImage(url, filename, downloadPath);
+  //   },
+  // );
 
   await Promise.all([...prebuildTasks]);
 
