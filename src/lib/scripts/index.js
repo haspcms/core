@@ -1,11 +1,11 @@
 import axios from "axios";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 import fs from "fs";
 import https from "https";
 import { Jsona } from "jsona";
 import rc from "rc";
 
-dotenv.config();
+// dotenv.config();
 const dataFormatter = new Jsona();
 
 const API_BASE = process.env.NEXT_PUBLIC_TENANT_API;
