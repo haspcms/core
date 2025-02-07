@@ -3,9 +3,9 @@ import axios from "axios";
 // import fs from "fs";
 // import https from "https";
 import { Jsona } from "jsona";
-// import rc from "rc";
+import rc from "rc";
 
-let fs, https, dotenv, rc;
+let fs, https, dotenv;
 
 if (typeof window === "undefined") {
   import("fs").then((module) => (fs = module));
@@ -14,7 +14,7 @@ if (typeof window === "undefined") {
     dotenv = module;
     dotenv.config();
   });
-  import("rc").then((module) => (rc = module));
+  // import("rc").then((module) => (rc = module));
 }
 
 const API_BASE = process.env.NEXT_PUBLIC_TENANT_API;
