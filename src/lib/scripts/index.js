@@ -9,6 +9,7 @@ import rc from "rc";
 const dataFormatter = new Jsona();
 
 const API_BASE = process.env.NEXT_PUBLIC_TENANT_API;
+console.log({ API_BASE });
 
 const confJSON = rc("hasp");
 
