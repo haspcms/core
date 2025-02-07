@@ -1,22 +1,23 @@
 import axios from "axios";
-// import dotenv from "dotenv";
+import dotenv from "dotenv";
 // import fs from "fs";
 // import https from "https";
 import { Jsona } from "jsona";
 import rc from "rc";
 
-let fs, https, dotenv;
+let fs, https;
 
 if (typeof window === "undefined") {
   import("fs").then((module) => (fs = module));
   import("https").then((module) => (https = module));
-  import("dotenv").then((module) => {
-    dotenv = module;
-    dotenv.config();
-  });
+  // import("dotenv").then((module) => {
+  //   dotenv = module;
+  //   dotenv.config();
+  // });
   // import("rc").then((module) => (rc = module));
 }
 
+dotenv.config();
 const dataFormatter = new Jsona();
 const API_BASE = process.env.NEXT_PUBLIC_TENANT_API;
 
