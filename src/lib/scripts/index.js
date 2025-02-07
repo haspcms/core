@@ -10,9 +10,11 @@ let fs, https, dotenv, rc;
 if (typeof window === "undefined") {
   import("fs").then((module) => (fs = module));
   import("https").then((module) => (https = module));
-  import("dotenv").then((module) => (dotenv = module));
+  import("dotenv").then((module) => {
+    dotenv = module;
+    dotenv.config();
+  });
   import("rc").then((module) => (rc = module));
-  dotenv.config();
 }
 
 const API_BASE = process.env.NEXT_PUBLIC_TENANT_API;
