@@ -94,7 +94,7 @@ export const preBuildDevelopment = async () => {
     },
   );
 
-  await Promise.all([...prebuildTasks, ...imageDownloadTasks]);
+  // await Promise.all([...prebuildTasks, ...imageDownloadTasks]);
 
   console.log("✅ Pre-Build Data & Images Generated Successfully!");
 };
