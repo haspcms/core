@@ -77,24 +77,24 @@ export const preBuildDevelopment = async () => {
 
   console.log("🛠️ Configuration JSON:", JSON.stringify(confJSON, null, 2));
 
-  // // Fetch all prebuild JSONs dynamically
-  // const prebuildTasks = (confJSON?.prebuildJSONS || []).map(
-  //   async ({ name, endpoint, outputPath, useDeserialization = true }) => {
-  //     const data = await fetchData(endpoint, useDeserialization);
-  //     if (data) {
-  //       writeJsonIfChanged(`${name}.json`, data, outputPath);
-  //     }
-  //   },
-  // );
+  // Fetch all prebuild JSONs dynamically
+  const prebuildTasks = (confJSON?.prebuildJSONS || []).map(
+    async ({ name, endpoint, outputPath, useDeserialization = true }) => {
+      const data = await fetchData(endpoint, useDeserialization);
+      if (data) {
+        writeJsonIfChanged(`${name}.json`, data, outputPath);
+      }
+    },
+  );
 
-  // // Download all images dynamically
-  // const imageDownloadTasks = (confJSON?.prebuildImages || []).map(
-  //   async ({ url, filename, downloadPath }) => {
-  //     await downloadImage(url, filename, downloadPath);
-  //   },
-  // );
+  // Download all images dynamically
+  const imageDownloadTasks = (confJSON?.prebuildImages || []).map(
+    async ({ url, filename, downloadPath }) => {
+      await downloadImage(url, filename, downloadPath);
+    },
+  );
 
-  // await Promise.all([...prebuildTasks, ...imageDownloadTasks]);
+  await Promise.all([...prebuildTasks]);
 
   console.log("✅ Pre-Build Data & Images Generated Successfully!");
 };
