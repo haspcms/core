@@ -1,6 +1,6 @@
 {
   "name": "@haspcms/core",
-  "version": "0.1.31",
+  "version": "0.1.32",
   "type": "module",
   "exports": {
     ".": {
