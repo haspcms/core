@@ -29,9 +29,6 @@
       "prettier --write"
     ]
   },
-  "dependencies": {
-    "fs": "^0.0.1-security"
-  },
   "devDependencies": {
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
@@ -49,6 +46,7 @@
     "axios": "^1.2.2",
     "dotenv": "^16.4.7",
     "flatted": "^3.3.2",
+    "fs": "^0.0.1-security",
     "jsona": "^1.12.1",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
