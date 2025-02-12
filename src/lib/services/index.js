@@ -18,6 +18,7 @@ export const dataFetcher = async (handler) => {
           ) {
             const data = handler?.data?.[key1]?.[key2];
             console.dir({ handler });
+            console.log(handler.main.collection.contents);
             console.dir({ data });
             if (data?.type === "contents") {
               const filters = Object.keys(handler?.data?.[key1])
