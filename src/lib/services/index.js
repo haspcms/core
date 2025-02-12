@@ -37,7 +37,7 @@ export const dataFetcher = async (handler) => {
               const params = `?page[size]=${limit}&sort=${sort_by}&${filters}`;
               const res = await CONTENTAPI.getContents(data.id, params);
               const dataHandler = dataFormatter2.deserialize(res);
-              console.log({ dataFetcher });
+              console.log({ dataHandler });
               data.contents = clean(dataHandler);
               const { meta } = res;
               delete meta?.links;
