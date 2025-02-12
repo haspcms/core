@@ -17,9 +17,6 @@ export const dataFetcher = async (handler) => {
             key2 === "form"
           ) {
             const data = handler?.data?.[key1]?.[key2];
-            console.dir({ handler });
-            console.log(handler.main.collection.contents);
-            console.dir({ data });
             if (data?.type === "contents") {
               const filters = Object.keys(handler?.data?.[key1])
                 .filter((n) => n.includes("filter_taxonomy"))
@@ -40,7 +37,6 @@ export const dataFetcher = async (handler) => {
               const params = `?page[size]=${limit}&sort=${sort_by}&${filters}`;
               const res = await CONTENTAPI.getContents(data.id, params);
               const dataHandler = dataFormatter2.deserialize(res);
-              console.dir({ dataHandler });
               data.contents = clean(dataHandler);
               const { meta } = res;
               delete meta?.links;
