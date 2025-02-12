@@ -17,6 +17,8 @@ export const dataFetcher = async (handler) => {
             key2 === "form"
           ) {
             const data = handler?.data?.[key1]?.[key2];
+            console.log({ handler });
+            console.log({ data });
             if (data?.type === "contents") {
               const filters = Object.keys(handler?.data?.[key1])
                 .filter((n) => n.includes("filter_taxonomy"))
