@@ -21,6 +21,7 @@ export const paths = async () => {
       console.error("Invalid confJSON:", confJSON);
       return { paths: [], fallback: false };
     }
+
     const str = JSON.stringify(confJSON, getCircularReplacer(), 2);
     console.log("Configuration JSON:", str);
     const contentTypes = Array.isArray(confJSON?.contents)
@@ -95,4 +96,18 @@ export const props = async (context) => {
       notFound: true,
     };
   }
+};
+
+export const getConfig = () => {
+  const confJSON = rc("hasp");
+
+  if (!confJSON || typeof confJSON !== "object") {
+    console.error("Invalid confJSON:", confJSON);
+    return { paths: [], fallback: false };
+  }
+
+  // const str = JSON.stringify(confJSON, getCircularReplacer(), 2);
+  // console.log("Configuration JSON:", str);
+
+  return confJSON;
 };
