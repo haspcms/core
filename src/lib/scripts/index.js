@@ -23,13 +23,6 @@ const API_BASE = process.env.NEXT_PUBLIC_TENANT_API;
 
 console.log({ API_BASE });
 
-const confJSON = rc("hasp");
-
-if (!confJSON || typeof confJSON !== "object") {
-  console.error("❌ Invalid confJSON:", confJSON);
-  process.exit(1);
-}
-
 // Helper function to fetch API data dynamically
 const fetchData = async (endpoint, useDeserialization = true) => {
   try {
@@ -89,6 +82,13 @@ export const preBuildDevelopment = async () => {
   console.log("🚀 Starting pre-build script...");
 
   console.log("🛠️ Configuration JSON:", JSON.stringify(confJSON, null, 2));
+
+  const confJSON = rc("hasp");
+
+  if (!confJSON || typeof confJSON !== "object") {
+    console.error("❌ Invalid confJSON:", confJSON);
+    process.exit(1);
+  }
 
   // Fetch all prebuild JSONs dynamically
   const prebuildTasks = (confJSON?.prebuildJSONS || []).map(
