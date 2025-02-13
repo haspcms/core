@@ -15,16 +15,16 @@ export const paths = async () => {
   try {
     const pages = await pagesPath();
     const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
-    const confJSON = rc("hasp");
+    const config = rc("hasp");
 
-    if (!confJSON || typeof confJSON !== "object") {
-      console.error("Invalid confJSON:", confJSON);
+    if (!config || typeof config !== "object") {
+      console.error("Invalid config:", config);
       return { paths: [], fallback: false };
     }
 
-    // const str = JSON.stringify(confJSON, getCircularReplacer(), 2);
-    // console.log("Configuration JSON:", str);
-    const contentTypes = Object.keys(confJSON?.contents || {});
+    const configStr = JSON.stringify(config, getCircularReplacer(), 2);
+    console.log("Configuration:", configStr);
+    const contentTypes = Object.keys(config?.contents || {});
 
     console.log({ contentTypes });
     const contentData = await Promise.all(
