@@ -101,10 +101,10 @@ export const props = async (context) => {
 export const getConfig = () => {
   const confJSON = rc("hasp");
 
-  if (!confJSON || typeof confJSON !== "object") {
-    console.error("Invalid confJSON:", confJSON);
-    return { paths: [], fallback: false };
-  }
+  // if (!confJSON || typeof confJSON !== "object") {
+  //   console.error("Invalid confJSON:", confJSON);
+  //   return { paths: [], fallback: false };
+  // }
 
   // const str = JSON.stringify(confJSON, getCircularReplacer(), 2);
   // console.log("Configuration JSON:", str);
