@@ -22,11 +22,9 @@ export const paths = async () => {
       return { paths: [], fallback: false };
     }
 
-    const str = JSON.stringify(confJSON, getCircularReplacer(), 2);
-    console.log("Configuration JSON:", str);
-    const contentTypes = Array.isArray(confJSON?.contents)
-      ? [...confJSON.contents]
-      : [];
+    // const str = JSON.stringify(confJSON, getCircularReplacer(), 2);
+    // console.log("Configuration JSON:", str);
+    const contentTypes = Object.keys(confJSON?.contents || {});
 
     console.log({ contentTypes });
     const contentData = await Promise.all(
