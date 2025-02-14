@@ -11,14 +11,6 @@ import { sortBlocks } from "../utils";
 
 const dataFormatter = new Jsona();
 
-// import { cosmiconfig } from "cosmiconfig";
-
-// export const getConfig = async () => {
-//   const explorer = cosmiconfig("hasp");
-//   const result = await explorer.search();
-//   return result?.config || { contents: {} };
-// };
-
 export const paths = async () => {
   try {
     const pages = await pagesPath();
