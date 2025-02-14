@@ -66,22 +66,22 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
     });
 };
 
-export const preBuildDevelopment = async (config) => {
-  console.log("preBuildDevelopment", config);
+export const preBuildDevelopment = async (configJS) => {
+  console.log("preBuildDevelopment", configJS);
 
-  const configrc = rc("hasp");
+  const config = configJS || rc("hasp");
 
-  if (!configrc || typeof configrc !== "object") {
-    console.error("❌ Invalid config:", configrc);
+  if (!config || typeof config !== "object") {
+    console.error("❌ Invalid config:", config);
     process.exit(1);
   }
 
   console.log("🚀 Starting pre-build script...");
 
-  console.log("🛠️ Configuration:", JSON.stringify(configrc, null, 2));
+  console.log("🛠️ Configuration:", JSON.stringify(config, null, 2));
 
   // Fetch all prebuild JSONs dynamically
-  const prebuildTasks = (configrc?.prebuildJSONS || []).map(
+  const prebuildTasks = (config?.prebuildJSONS || []).map(
     async ({ name, endpoint, outputPath, useDeserialization = true }) => {
       const data = await fetchData(endpoint, useDeserialization);
       if (data) {
