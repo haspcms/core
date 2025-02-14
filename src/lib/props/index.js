@@ -11,13 +11,24 @@ import { sortBlocks } from "../utils";
 
 const dataFormatter = new Jsona();
 
+import { createRequire } from "module";
+const require = createRequire(import.meta.url); // Enable CommonJS require
+
+const cosmiconfig = require("cosmiconfig");
+const explorer = cosmiconfig.cosmiconfigSync("hasp");
+
+export const getConfig = () => {
+  const result = explorer.search();
+  return result?.config || { contents: {} };
+};
+
 export const paths = async () => {
   try {
     const pages = await pagesPath();
     const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
     const config = rc("hasp");
 
-    const haspConfig = await getConfig();
+    const haspConfig = getConfig();
     console.log("props", { haspConfig });
 
     if (!config || typeof config !== "object") {
@@ -99,13 +110,13 @@ export const props = async (context) => {
   }
 };
 
-export const getConfig = async () => {
-  const { cosmiconfig } = await import("cosmiconfig"); // Dynamic import for ESM
-  const explorer = cosmiconfig("hasp");
+// export const getConfig = async () => {
+//   const { cosmiconfig } = await import("cosmiconfig"); // Dynamic import for ESM
+//   const explorer = cosmiconfig("hasp");
 
-  const result = await explorer.search(); // Async search
-  const haspConfig = result?.config || { contents: {} };
+//   const result = await explorer.search(); // Async search
+//   const haspConfig = result?.config || { contents: {} };
 
-  console.log("haspConfigx", haspConfig);
-  return haspConfig;
-};
+//   console.log("haspConfigx", haspConfig);
+//   return haspConfig;
+// };
