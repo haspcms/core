@@ -11,20 +11,21 @@ import { sortBlocks } from "../utils";
 
 const dataFormatter = new Jsona();
 
-export const paths = async () => {
+export const paths = async (config) => {
+  console.log("paths", config);
   try {
     const pages = await pagesPath();
     const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
-    const config = rc("hasp");
+    const configrc = rc("hasp");
 
-    if (!config || typeof config !== "object") {
-      console.error("Invalid config:", config);
+    if (!configrc || typeof configrc !== "object") {
+      console.error("Invalid config:", configrc);
       return { paths: [], fallback: false };
     }
 
-    const configStr = JSON.stringify(config, getCircularReplacer(), 2);
+    const configStr = JSON.stringify(configrc, getCircularReplacer(), 2);
     console.log("Configuration:", configStr);
-    const contentTypes = Object.keys(config?.contents || {});
+    const contentTypes = Object.keys(configrc?.contents || {});
 
     console.log({ contentTypes });
     const contentData = await Promise.all(
