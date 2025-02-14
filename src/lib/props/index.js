@@ -7,7 +7,7 @@ import {
   iteratePage,
   pagesPath,
 } from "../services";
-import { sortBlocks } from "../utils";
+import { loadHaspConfig, sortBlocks } from "../utils";
 
 const dataFormatter = new Jsona();
 
@@ -68,6 +68,9 @@ export const props = async (context) => {
 
   const config = rc("hasp");
   console.log("props config", { config });
+
+  const propCOnfig = loadHaspConfig();
+  console.log({ propCOnfig });
 
   try {
     const page = dataFormatter.deserialize(pageHandler);
