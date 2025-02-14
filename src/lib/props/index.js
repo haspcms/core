@@ -11,14 +11,11 @@ import { sortBlocks } from "../utils";
 
 const dataFormatter = new Jsona();
 
-import { createRequire } from "module";
-const require = createRequire(import.meta.url); // Enable CommonJS require
+import { cosmiconfig } from "cosmiconfig";
 
-const cosmiconfig = require("cosmiconfig");
-const explorer = cosmiconfig.cosmiconfigSync("hasp");
-
-export const getConfig = () => {
-  const result = explorer.search();
+export const getConfig = async () => {
+  const explorer = cosmiconfig("hasp");
+  const result = await explorer.search();
   return result?.config || { contents: {} };
 };
 
