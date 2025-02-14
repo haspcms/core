@@ -97,7 +97,7 @@ export const props = async (context) => {
 };
 
 export const getConfig = async () => {
-  const { cosmiconfigSync } = await import("cosmiconfig"); // Dynamic import for ESM compatibility
+  const { cosmiconfigSync } = await import("cosmiconfig");
 
   const explorer = cosmiconfigSync("hasp");
   const { config: haspConfig } = explorer.search() || { contents: {} };
