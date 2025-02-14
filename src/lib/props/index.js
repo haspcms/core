@@ -11,14 +11,33 @@ import { sortBlocks } from "../utils";
 
 const dataFormatter = new Jsona();
 
+const os = require("os");
+console.log(os.homedir());
+
+import { cosmiconfig } from "cosmiconfig";
+
+const explorer = cosmiconfig("myapp");
+
+async function loadConfig() {
+  try {
+    const result = await explorer.search();
+    if (result) {
+      console.log("Config found:", result.config);
+    } else {
+      console.log("No config found");
+    }
+  } catch (error) {
+    console.error("Error loading config:", error);
+  }
+}
+
+loadConfig();
+
 export const paths = async () => {
   try {
     const pages = await pagesPath();
     const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
     const config = rc("hasp");
-
-    // const haspConfig = getConfig();
-    // console.log("props", { haspConfig });
 
     if (!config || typeof config !== "object") {
       console.error("Invalid config:", config);
@@ -62,16 +81,6 @@ function getCircularReplacer() {
 }
 
 export const props = async (context) => {
-  const { cosmiconfigSync } = await import("cosmiconfig"); // Dynamic import to prevent build errors
-  const explorer = cosmiconfigSync("hasp");
-
-  // Automatically search for `hasp.config.js`
-  const result = explorer.search();
-
-  // Default to empty config if not found
-  const haspConfig = result?.config || { contents: {} };
-  console.log("propsxx", { haspConfig });
-
   const id = context?.params?.id || [];
   const segment = id.join("/");
   const pageHandler = await PAGEAPI.findByRoute(
@@ -109,13 +118,16 @@ export const props = async (context) => {
   }
 };
 
-// export const getConfig = async () => {
-//   const { cosmiconfig } = await import("cosmiconfig"); // Dynamic import for ESM
-//   const explorer = cosmiconfig("hasp");
+export const getConfig = () => {
+  const confJSON = rc("hasp");
 
-//   const result = await explorer.search(); // Async search
-//   const haspConfig = result?.config || { contents: {} };
+  // if (!confJSON || typeof confJSON !== "object") {
+  //   console.error("Invalid confJSON:", confJSON);
+  //   return { paths: [], fallback: false };
+  // }
 
-//   console.log("haspConfigx", haspConfig);
-//   return haspConfig;
-// };
+  // const str = JSON.stringify(confJSON, getCircularReplacer(), 2);
+  // console.log("Configuration JSON:", str);
+
+  return confJSON;
+};
