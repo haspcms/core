@@ -17,6 +17,9 @@ export const paths = async () => {
     const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
     const config = rc("hasp");
 
+    const haspConfig = await getConfig();
+    console.log("props", { haspConfig });
+
     if (!config || typeof config !== "object") {
       console.error("Invalid config:", config);
       return { paths: [], fallback: false };
