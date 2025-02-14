@@ -97,12 +97,12 @@ export const props = async (context) => {
 };
 
 export const getConfig = async () => {
-  const { cosmiconfigSync } = await import("cosmiconfig");
+  const { cosmiconfig } = await import("cosmiconfig"); // Dynamic import for ESM
+  const explorer = cosmiconfig("hasp");
 
-  const explorer = cosmiconfigSync("hasp");
-  const { config: haspConfig } = explorer.search() || { contents: {} };
+  const result = await explorer.search(); // Async search
+  const haspConfig = result?.config || { contents: {} };
 
-  console.log("haspConfigx", { haspConfig });
-
+  console.log("haspConfigx", haspConfig);
   return haspConfig;
 };
