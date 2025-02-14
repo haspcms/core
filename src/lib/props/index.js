@@ -1,4 +1,3 @@
-import { cosmiconfigSync } from "cosmiconfig";
 import { Jsona } from "jsona";
 import rc from "rc";
 import { PAGEAPI } from "../api";
@@ -97,16 +96,8 @@ export const props = async (context) => {
   }
 };
 
-export const getConfig = () => {
-  // const confJSON = rc("hasp");
-
-  // if (!confJSON || typeof confJSON !== "object") {
-  //   console.error("Invalid confJSON:", confJSON);
-  //   return { paths: [], fallback: false };
-  // }
-
-  // const str = JSON.stringify(confJSON, getCircularReplacer(), 2);
-  // console.log("Configuration JSON:", str);
+export const getConfig = async () => {
+  const { cosmiconfigSync } = await import("cosmiconfig"); // Dynamic import for ESM compatibility
 
   const explorer = cosmiconfigSync("hasp");
   const { config: haspConfig } = explorer.search() || { contents: {} };
