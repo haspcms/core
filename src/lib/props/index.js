@@ -70,6 +70,12 @@ function getCircularReplacer() {
 }
 
 export const props = async (context) => {
+  const { cosmiconfig } = await import("cosmiconfig"); // Async import for ESM compatibility
+  const explorer = cosmiconfig("hasp");
+  const result = await explorer.search(); // Use async search
+
+  console.log({ result });
+
   const id = context?.params?.id || [];
   const segment = id.join("/");
   const pageHandler = await PAGEAPI.findByRoute(
