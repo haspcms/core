@@ -11,28 +11,6 @@ import { sortBlocks } from "../utils";
 
 const dataFormatter = new Jsona();
 
-const os = require("os");
-console.log(os.homedir());
-
-import { cosmiconfig } from "cosmiconfig";
-
-const explorer = cosmiconfig("myapp");
-
-async function loadConfig() {
-  try {
-    const result = await explorer.search();
-    if (result) {
-      console.log("Config found:", result.config);
-    } else {
-      console.log("No config found");
-    }
-  } catch (error) {
-    console.error("Error loading config:", error);
-  }
-}
-
-loadConfig();
-
 export const paths = async () => {
   try {
     const pages = await pagesPath();
@@ -87,6 +65,9 @@ export const props = async (context) => {
     segment,
     "?include=blockContents.block,metaData,content,taxonomyTerms.taxonomy",
   );
+
+  const config = rc("hasp");
+  console.log("props config", { config });
 
   try {
     const page = dataFormatter.deserialize(pageHandler);
