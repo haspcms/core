@@ -62,11 +62,15 @@ function getCircularReplacer() {
 }
 
 export const props = async (context) => {
-  const { cosmiconfig } = await import("cosmiconfig"); // Async import for ESM compatibility
-  const explorer = cosmiconfig("hasp");
-  const result = await explorer.search(); // Use async search
+  const { cosmiconfigSync } = await import("cosmiconfig"); // Dynamic import to prevent build errors
+  const explorer = cosmiconfigSync("hasp");
 
-  console.log({ result });
+  // Automatically search for `hasp.config.js`
+  const result = explorer.search();
+
+  // Default to empty config if not found
+  const haspConfig = result?.config || { contents: {} };
+  console.log("propsxx", { haspConfig });
 
   const id = context?.params?.id || [];
   const segment = id.join("/");
