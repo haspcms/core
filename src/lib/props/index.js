@@ -11,13 +11,13 @@ import { sortBlocks } from "../utils";
 
 const dataFormatter = new Jsona();
 
-import { cosmiconfig } from "cosmiconfig";
+// import { cosmiconfig } from "cosmiconfig";
 
-export const getConfig = async () => {
-  const explorer = cosmiconfig("hasp");
-  const result = await explorer.search();
-  return result?.config || { contents: {} };
-};
+// export const getConfig = async () => {
+//   const explorer = cosmiconfig("hasp");
+//   const result = await explorer.search();
+//   return result?.config || { contents: {} };
+// };
 
 export const paths = async () => {
   try {
@@ -25,8 +25,8 @@ export const paths = async () => {
     const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
     const config = rc("hasp");
 
-    const haspConfig = getConfig();
-    console.log("props", { haspConfig });
+    // const haspConfig = getConfig();
+    // console.log("props", { haspConfig });
 
     if (!config || typeof config !== "object") {
       console.error("Invalid config:", config);
