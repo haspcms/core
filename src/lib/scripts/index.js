@@ -38,11 +38,11 @@ const writeJsonIfChanged = (filename, newData, outputPath) => {
   }
 
   if (existingData !== JSON.stringify(newData)) {
-    logger.success(`✔ Generated JSON: ${filePath}`);
+    logger.success(`Generated JSON: ${filePath}`);
     fs.mkdirSync(directory, { recursive: true }); // Ensure directory exists
     fs.writeFileSync(filePath, JSON.stringify(newData));
   } else {
-    logger.warn(`⚠ Skipped (no changes): ${filePath}`);
+    logger.log(`❯ Skipped (no changes): ${filePath}`);
   }
 };
 
@@ -59,9 +59,9 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
     const buffer = await response.arrayBuffer();
     fs.writeFileSync(filePath, Buffer.from(buffer));
 
-    logger.success(`✔ Downloaded image: ${filePath}`);
+    logger.success(`Downloaded image: ${filePath}`);
   } catch (err) {
-    logger.error(`✘ Error downloading ${imageUrl}: ${err.message}`);
+    logger.error(`Error downloading ${imageUrl}: ${err.message}`);
   }
 };
 
@@ -69,12 +69,12 @@ export const preBuildDevelopment = async () => {
   const config = rc("hasp");
 
   if (!config || typeof config !== "object") {
-    logger.error(`✘ Invalid config: ${config}`);
-    logger.warn("⚠ Aborting prebuild script...");
+    logger.error(`Invalid config: ${config}`);
+    logger.warn("Aborting prebuild script...");
     return;
   }
 
-  logger.info("🔨 Starting pre-build script...");
+  logger.success("Starting pre-build script...");
 
   // Fetch all prebuild JSONs dynamically
   const prebuildTasks = (config?.prebuildJSONS || []).map(
@@ -96,13 +96,5 @@ export const preBuildDevelopment = async () => {
   // Run all tasks concurrently
   await Promise.all([...prebuildTasks, ...imageDownloadTasks]);
 
-  logger.success("🎉 Pre-Build Data & Images Generated Successfully!");
-
-  // Optional: Add a summary report
-  logger.info("\nPre-Build Summary:");
-  logger.info(`✔ ${config.prebuildJSONS?.length || 0} JSON files generated.`);
-  logger.info(`✔ ${config.prebuildImages?.length || 0} images downloaded.`);
-  logger.info(
-    `✔ Total tasks: ${config.prebuildJSONS?.length + config.prebuildImages?.length}`,
-  );
+  logger.success("Pre-Build Data & Images Generated Successfully!");
 };

@@ -16,17 +16,8 @@ const logger = {
   debug: (message) => {
     console.debug(`${message}`);
   },
-  custom: (level, message) => {
-    const levelSymbols = {
-      info: "ℹ",
-      success: "✔ ",
-      warn: "⚠️",
-      error: "✘",
-      debug: "",
-    };
-
-    const symbol = levelSymbols[level] || "🔘";
-    console.log(chalk.white(`${symbol} ${message}`));
+  custom: (message) => {
+    console.log(message);
   },
 };
 
