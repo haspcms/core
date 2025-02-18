@@ -1,6 +1,5 @@
 import chalk from "chalk";
 
-// Logger utility for common log levels with minimalist ASCII symbols
 const logger = {
   info: (message) => {
     console.log(`${message}`);
@@ -17,7 +16,6 @@ const logger = {
   debug: (message) => {
     console.debug(`${message}`);
   },
-  // Optional: You can add more custom log levels with minimalist symbols
   custom: (level, message) => {
     const levelSymbols = {
       info: "ℹ",
@@ -27,7 +25,7 @@ const logger = {
       debug: "",
     };
 
-    const symbol = levelSymbols[level] || "🔘"; // Default symbol if not matched
+    const symbol = levelSymbols[level] || "🔘";
     console.log(chalk.white(`${symbol} ${message}`));
   },
 };
