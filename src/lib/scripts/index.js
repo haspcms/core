@@ -1,4 +1,5 @@
 import axios from "axios";
+import chalk from "chalk";
 import dotenv from "dotenv";
 import fs from "fs";
 import { Jsona } from "jsona";
@@ -38,11 +39,11 @@ const writeJsonIfChanged = (filename, newData, outputPath) => {
   }
 
   if (existingData !== JSON.stringify(newData)) {
-    logger.success(`Generated JSON: ${filePath}`);
+    logger.success(`Generated JSON: ${chalk.greenBright(filePath)}`);
     fs.mkdirSync(directory, { recursive: true }); // Ensure directory exists
     fs.writeFileSync(filePath, JSON.stringify(newData));
   } else {
-    logger.info(`❯ Skipped (no changes): ${filePath}`);
+    logger.info(`❯ Skipped (no changes): ${chalk.yellowBright(filePath)}`);
   }
 };
 
@@ -59,7 +60,7 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
     const buffer = await response.arrayBuffer();
     fs.writeFileSync(filePath, Buffer.from(buffer));
 
-    logger.success(`Downloaded image: ${filePath}`);
+    logger.success(`Downloaded image: ${chalk.greenBright(filePath)}`);
   } catch (err) {
     logger.error(`Error downloading ${imageUrl}: ${err.message}`);
   }
