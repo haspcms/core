@@ -3,13 +3,12 @@ import dotenv from "dotenv";
 import fs from "fs";
 import { Jsona } from "jsona";
 import rc from "rc";
-import { EMOJI, log } from "../logger";
 
 dotenv.config();
 const dataFormatter = new Jsona();
 const API_BASE = process.env.NEXT_PUBLIC_TENANT_API;
 
-log(EMOJI.wrench, `API_BASE: ${API_BASE}`, {}, "blue"); // Info in blue
+console.log({ API_BASE });
 
 // Helper function to fetch API data dynamically
 const fetchData = async (endpoint, useDeserialization = true) => {
@@ -19,12 +18,7 @@ const fetchData = async (endpoint, useDeserialization = true) => {
       ? dataFormatter.deserialize(response.data)
       : response.data;
   } catch (error) {
-    log(
-      EMOJI.error,
-      `Error fetching data - Endpoint: ${endpoint}`,
-      { error: error.message },
-      "red",
-    ); // Error in red
+    console.error(`❌ Error fetching ${endpoint}:`, error.message);
     return null;
   }
 };
@@ -37,17 +31,17 @@ const writeJsonIfChanged = (filename, newData, outputPath) => {
   let existingData = null;
   try {
     existingData = fs.readFileSync(filePath, "utf8");
+    // eslint-disable-next-line no-unused-vars
   } catch (error) {
     // File does not exist, proceed with writing
   }
 
   if (existingData !== JSON.stringify(newData)) {
+    console.log(`✅ Generated JSON: \x1b[32m${filePath}\x1b[0m`);
     fs.mkdirSync(directory, { recursive: true }); // Ensure directory exists
     fs.writeFileSync(filePath, JSON.stringify(newData));
-
-    log(EMOJI.check, `Generated JSON: ${filePath}`, {}, "green"); // Success in green
   } else {
-    log(EMOJI.skip, `Skipped (no changes): ${filePath}`, {}, "yellow"); // Warning in yellow
+    console.log(`⏭️ Skipped (no changes): \x1b[33m${filePath}\x1b[0m`);
   }
 };
 
@@ -64,14 +58,12 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
     const buffer = await response.arrayBuffer();
     fs.writeFileSync(filePath, Buffer.from(buffer));
 
-    log(EMOJI.image, `Downloaded image: ${filePath}`, {}, "green"); // Success in green
+    console.log(`🖼️ Downloaded image:`);
+    console.log(filePath);
   } catch (err) {
-    log(
-      EMOJI.error,
-      `Error downloading image - URL: ${imageUrl}`,
-      { error: err.message },
-      "red",
-    ); // Error in red
+    console.error(`❌ Error downloading:`);
+    console.error(imageUrl);
+    console.error(err.message);
   }
 };
 
@@ -79,12 +71,13 @@ export const preBuildDevelopment = async () => {
   const config = rc("hasp");
 
   if (!config || typeof config !== "object") {
-    log(EMOJI.error, `Invalid config: ${config}`, {}, "red"); // Error in red
-    log(EMOJI.skip, `Aborting prebuild script...`, {}, "yellow"); // Warning in yellow
+    console.error(`❌ Invalid config:`);
+    console.error(config);
+    console.log(`⏭️ Aborting prebuild script...`);
     return;
   }
 
-  log(EMOJI.rocket, `Starting pre-build script...`, {}, "blue"); // Info in blue
+  console.log("🚀 Starting pre-build script...");
 
   // Fetch all prebuild JSONs dynamically
   const prebuildTasks = (config?.prebuildJSONS || []).map(
@@ -105,10 +98,5 @@ export const preBuildDevelopment = async () => {
 
   await Promise.all([...prebuildTasks, ...imageDownloadTasks]);
 
-  log(
-    EMOJI.check,
-    `Pre-Build Data & Images Generated Successfully!`,
-    {},
-    "green",
-  ); // Success in green
+  console.log(`✅ Pre-Build Data & Images Generated Successfully!`);
 };
