@@ -3,12 +3,13 @@ import dotenv from "dotenv";
 import fs from "fs";
 import { Jsona } from "jsona";
 import rc from "rc";
+import logger from "./logger"; // Importing the custom logger
 
 dotenv.config();
 const dataFormatter = new Jsona();
 const API_BASE = process.env.NEXT_PUBLIC_TENANT_API;
 
-console.log({ API_BASE });
+logger.info(`API Base: ${API_BASE}`);
 
 // Helper function to fetch API data dynamically
 const fetchData = async (endpoint, useDeserialization = true) => {
@@ -18,7 +19,7 @@ const fetchData = async (endpoint, useDeserialization = true) => {
       ? dataFormatter.deserialize(response.data)
       : response.data;
   } catch (error) {
-    console.error(`❌ Error fetching ${endpoint}:`, error.message);
+    logger.error(`Error fetching ${endpoint}: ${error.message}`);
     return null;
   }
 };
@@ -37,11 +38,11 @@ const writeJsonIfChanged = (filename, newData, outputPath) => {
   }
 
   if (existingData !== JSON.stringify(newData)) {
-    console.log(`✅ Generated JSON: \x1b[32m${filePath}\x1b[0m`);
+    logger.success(`Generated JSON: ${filePath}`);
     fs.mkdirSync(directory, { recursive: true }); // Ensure directory exists
     fs.writeFileSync(filePath, JSON.stringify(newData));
   } else {
-    console.log(`⏭️ Skipped (no changes): \x1b[33m${filePath}\x1b[0m`);
+    logger.warn(`Skipped (no changes): ${filePath}`);
   }
 };
 
@@ -58,12 +59,9 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
     const buffer = await response.arrayBuffer();
     fs.writeFileSync(filePath, Buffer.from(buffer));
 
-    console.log(`🖼️ Downloaded image:`);
-    console.log(filePath);
+    logger.info(`Downloaded image: ${filePath}`);
   } catch (err) {
-    console.error(`❌ Error downloading:`);
-    console.error(imageUrl);
-    console.error(err.message);
+    logger.error(`Error downloading ${imageUrl}: ${err.message}`);
   }
 };
 
@@ -71,13 +69,12 @@ export const preBuildDevelopment = async () => {
   const config = rc("hasp");
 
   if (!config || typeof config !== "object") {
-    console.error(`❌ Invalid config:`);
-    console.error(config);
-    console.log(`⏭️ Aborting prebuild script...`);
+    logger.error(`Invalid config: ${config}`);
+    logger.warn("Aborting prebuild script...");
     return;
   }
 
-  console.log("🚀 Starting pre-build script...");
+  logger.info("Starting pre-build script...");
 
   // Fetch all prebuild JSONs dynamically
   const prebuildTasks = (config?.prebuildJSONS || []).map(
@@ -98,5 +95,5 @@ export const preBuildDevelopment = async () => {
 
   await Promise.all([...prebuildTasks, ...imageDownloadTasks]);
 
-  console.log(`✅ Pre-Build Data & Images Generated Successfully!`);
+  logger.success("Pre-Build Data & Images Generated Successfully!");
 };

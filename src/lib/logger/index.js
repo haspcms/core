@@ -1,28 +1,35 @@
 import chalk from "chalk";
 
-const log = (emoji, message, extraData = {}, color = "green") => {
-  // Choose color based on log type
-  const colorMethod = chalk[color] || chalk.green;
+// Logger utility for common log levels
+const logger = {
+  info: (message) => {
+    console.log(chalk.cyan(`INFO: ${message}`));
+  },
+  success: (message) => {
+    console.log(chalk.green(`SUCCESS: ${message}`));
+  },
+  warn: (message) => {
+    console.log(chalk.yellow(`WARNING: ${message}`));
+  },
+  error: (message) => {
+    console.error(chalk.red(`ERROR: ${message}`));
+  },
+  debug: (message) => {
+    console.debug(chalk.blue(`DEBUG: ${message}`));
+  },
+  // Optional: You can add more custom log levels
+  custom: (level, message) => {
+    const levelColors = {
+      info: chalk.cyan,
+      success: chalk.green,
+      warn: chalk.yellow,
+      error: chalk.red,
+      debug: chalk.blue,
+    };
 
-  // Log formatted message
-  const formattedMessage = `${emoji} ${message}`;
-
-  const logObject = {
-    message: colorMethod(formattedMessage),
-    ...extraData, // Add any extra data to the log if provided
-  };
-
-  console.log(JSON.stringify(logObject));
+    const logColor = levelColors[level] || chalk.white; // Default to white
+    console.log(logColor(`${level.toUpperCase()}: ${message}`));
+  },
 };
 
-// Emoji literals without quotations (just use constants in the function call)
-const EMOJI = {
-  wrench: `🔧`,
-  check: `✅`,
-  error: `❌`,
-  image: `🖼️`,
-  rocket: `🚀`,
-  skip: `⏭️`,
-};
-
-export { EMOJI, log };
+export default logger;
