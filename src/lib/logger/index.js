@@ -3,19 +3,19 @@ import chalk from "chalk";
 // Logger utility for common log levels with minimalist ASCII symbols
 const logger = {
   info: (message) => {
-    console.log(`ℹ ${message}`);
+    console.log(`${message}`);
   },
   success: (message) => {
-    console.log(`✔ ${message}`);
+    console.log(chalk.greenBright("✔"), `${message}`);
   },
   warn: (message) => {
-    console.log(`⚠️ ${message}`);
+    console.log(chalk.yellowBright("⚠️"), `${message}`);
   },
   error: (message) => {
-    console.error(`✘ ${message}`);
+    console.error(chalk.redBright(`✘ ${message}`));
   },
   debug: (message) => {
-    console.debug(` ${message}`);
+    console.debug(`${message}`);
   },
   // Optional: You can add more custom log levels with minimalist symbols
   custom: (level, message) => {
