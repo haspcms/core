@@ -75,7 +75,9 @@ export const preBuildDevelopment = async () => {
     return;
   }
 
-  logger.success("Starting pre-build script...");
+  logger.custom(chalk.bgWhiteBright(" ℹ Starting pre-build script... "));
+
+  logger.success("");
 
   // Fetch all prebuild JSONs dynamically
   const prebuildTasks = (config?.prebuildJSONS || []).map(
@@ -98,6 +100,6 @@ export const preBuildDevelopment = async () => {
   await Promise.all([...prebuildTasks, ...imageDownloadTasks]);
 
   logger.custom(
-    chalk.bgGreenBright("Pre-Build Data & Images Generated Successfully!"),
+    chalk.bgGreenBright(" ✔ Pre-Build Data & Images Generated Successfully! "),
   );
 };
