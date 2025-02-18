@@ -89,7 +89,9 @@ export const preBuildDevelopment = async (config) => {
 
   if (!config || typeof config !== "object") {
     console.error("❌ Invalid config:", config);
-    process.exit(1);
+    console.log("Aborting prebuilds...");
+    // process.exit(1);
+    return;
   }
 
   console.log("🚀 Starting pre-build script...");
