@@ -2,6 +2,7 @@ import axios from "axios";
 import dotenv from "dotenv";
 import fs from "fs";
 import { Jsona } from "jsona";
+import rc from "rc";
 
 dotenv.config();
 const dataFormatter = new Jsona();
@@ -17,7 +18,7 @@ const fetchData = async (endpoint, useDeserialization = true) => {
       ? dataFormatter.deserialize(response.data)
       : response.data;
   } catch (error) {
-    console.error(`❌ Error fetching ${endpoint}:`, error.message);
+    console.error(`❌Error fetching ${endpoint}:`, error.message);
     return null;
   }
 };
@@ -36,34 +37,13 @@ const writeJsonIfChanged = (filename, newData, outputPath) => {
   }
 
   if (existingData !== JSON.stringify(newData)) {
-    console.log(`✅ Generated JSON: \x1b[32m${filePath}\x1b[0m`);
+    console.log(`✅Generated JSON: \x1b[32m${filePath}\x1b[0m`);
     fs.mkdirSync(directory, { recursive: true }); // Ensure directory exists
     fs.writeFileSync(filePath, JSON.stringify(newData));
   } else {
-    console.log(`⏭️  Skipped (no changes): \x1b[33m${filePath}\x1b[0m`);
+    console.log(`⏭️Skipped (no changes): \x1b[33m${filePath}\x1b[0m`);
   }
 };
-
-// Download and save an image
-// const downloadImage = async (imageUrl, filename, downloadPath) => {
-//   const directory = downloadPath || "./public/images/";
-//   const filePath = `${directory}${filename}`;
-
-//   fs.mkdirSync(directory, { recursive: true }); // Ensure directory exists
-
-//   const file = fs.createWriteStream(filePath);
-//   https
-//     .get(imageUrl, (response) => {
-//       response.pipe(file);
-//       file.on("finish", () => {
-//         file.close();
-//         console.log(`🖼️  Downloaded image: ${filePath}`);
-//       });
-//     })
-//     .on("error", (err) => {
-//       console.error(`❌ Error downloading ${imageUrl}:`, err.message);
-//     });
-// };
 
 const downloadImage = async (imageUrl, filename, downloadPath) => {
   const directory = downloadPath || "./public/images/";
@@ -78,25 +58,26 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
     const buffer = await response.arrayBuffer();
     fs.writeFileSync(filePath, Buffer.from(buffer));
 
-    console.log(`🖼️  Downloaded image: ${filePath}`);
+    console.log(`🖼️Downloaded image: ${filePath}`);
   } catch (err) {
-    console.error(`❌ Error downloading ${imageUrl}:`, err.message);
+    console.error(`❌Error downloading ${imageUrl}:`, err.message);
   }
 };
 
-export const preBuildDevelopment = async (config) => {
-  console.log("preBuildDevelopment", config);
+export const preBuildDevelopment = async () => {
+  // console.log("preBuildDevelopment", config);
+  const config = rc("hasp");
 
   if (!config || typeof config !== "object") {
-    console.error("❌ Invalid config:", config);
-    console.log("Aborting prebuilds...");
+    console.error("❌Invalid config:", config);
+    console.log("⏭️Aborting prebuild script...");
     // process.exit(1);
     return;
   }
 
-  console.log("🚀 Starting pre-build script...");
+  console.log("🚀Starting pre-build script...");
 
-  console.log("🛠️ Configuration:", JSON.stringify(config, null, 2));
+  // console.log("🛠️Configuration:", JSON.stringify(config, null, 2));
 
   // Fetch all prebuild JSONs dynamically
   const prebuildTasks = (config?.prebuildJSONS || []).map(
