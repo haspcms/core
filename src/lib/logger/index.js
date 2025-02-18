@@ -1,34 +1,34 @@
 import chalk from "chalk";
 
-// Logger utility for common log levels
+// Logger utility for common log levels with minimalist ASCII symbols
 const logger = {
   info: (message) => {
-    console.log(chalk.cyan(`INFO: ${message}`));
+    console.log(`ℹ ${message}`);
   },
   success: (message) => {
-    console.log(chalk.green(`SUCCESS: ${message}`));
+    console.log(`✔ ${message}`);
   },
   warn: (message) => {
-    console.log(chalk.yellow(`WARNING: ${message}`));
+    console.log(`⚠️ ${message}`);
   },
   error: (message) => {
-    console.error(chalk.red(`ERROR: ${message}`));
+    console.error(`✘ ${message}`);
   },
   debug: (message) => {
-    console.debug(chalk.blue(`DEBUG: ${message}`));
+    console.debug(` ${message}`);
   },
-  // Optional: You can add more custom log levels
+  // Optional: You can add more custom log levels with minimalist symbols
   custom: (level, message) => {
-    const levelColors = {
-      info: chalk.cyan,
-      success: chalk.green,
-      warn: chalk.yellow,
-      error: chalk.red,
-      debug: chalk.blue,
+    const levelSymbols = {
+      info: "ℹ",
+      success: "✔ ",
+      warn: "⚠️",
+      error: "✘",
+      debug: "",
     };
 
-    const logColor = levelColors[level] || chalk.white; // Default to white
-    console.log(logColor(`${level.toUpperCase()}: ${message}`));
+    const symbol = levelSymbols[level] || "🔘"; // Default symbol if not matched
+    console.log(chalk.white(`${symbol} ${message}`));
   },
 };
 
