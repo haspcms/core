@@ -18,7 +18,7 @@ const fetchData = async (endpoint, useDeserialization = true) => {
       ? dataFormatter.deserialize(response.data)
       : response.data;
   } catch (error) {
-    console.error(`\t ❌ Error fetching ${endpoint}:`, error.message);
+    console.error(`❌ Error fetching ${endpoint}:`, error.message);
     return null;
   }
 };
@@ -37,11 +37,11 @@ const writeJsonIfChanged = (filename, newData, outputPath) => {
   }
 
   if (existingData !== JSON.stringify(newData)) {
-    console.log(`\t ✅ Generated JSON: \x1b[32m${filePath}\x1b[0m`);
+    console.log(`✅ Generated JSON: \x1b[32m${filePath}\x1b[0m`);
     fs.mkdirSync(directory, { recursive: true }); // Ensure directory exists
     fs.writeFileSync(filePath, JSON.stringify(newData));
   } else {
-    console.log(`\t ⏭️ Skipped (no changes): \x1b[33m${filePath}\x1b[0m`);
+    console.log(`⏭️ Skipped (no changes): \x1b[33m${filePath}\x1b[0m`);
   }
 };
 
@@ -58,9 +58,9 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
     const buffer = await response.arrayBuffer();
     fs.writeFileSync(filePath, Buffer.from(buffer));
 
-    console.log(`\t 🖼️ Downloaded image: ${filePath}`);
+    console.log(`🖼️ Downloaded image: ${filePath}`);
   } catch (err) {
-    console.error(`\t ❌ Error downloading ${imageUrl}:`, err.message);
+    console.error(`❌ Error downloading ${imageUrl}:`, err.message);
   }
 };
 
@@ -68,12 +68,12 @@ export const preBuildDevelopment = async () => {
   const config = rc("hasp");
 
   if (!config || typeof config !== "object") {
-    console.error("\t ❌ Invalid config:", config);
-    console.log("\t ⏭️ Aborting prebuild script...");
+    console.error(`❌ Invalid config:`, config);
+    console.log(`⏭️ Aborting prebuild script...`);
     return;
   }
 
-  console.log("🚀 Starting pre-build script...");
+  console.log(`🚀 Starting pre-build script...`);
 
   // Fetch all prebuild JSONs dynamically
   const prebuildTasks = (config?.prebuildJSONS || []).map(
@@ -94,5 +94,5 @@ export const preBuildDevelopment = async () => {
 
   await Promise.all([...prebuildTasks, ...imageDownloadTasks]);
 
-  console.log("\t ✅ Pre-Build Data & Images Generated Successfully!");
+  console.log(`✅ Pre-Build Data & Images Generated Successfully!`);
 };
