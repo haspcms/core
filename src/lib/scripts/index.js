@@ -10,8 +10,6 @@ dotenv.config();
 const dataFormatter = new Jsona();
 const BASE_API = process.env.NEXT_PUBLIC_TENANT_API;
 
-logger.info(`Base API: ${BASE_API}`);
-
 // Helper function to fetch API data dynamically
 const fetchData = async (endpoint, useDeserialization = true) => {
   try {
@@ -43,7 +41,7 @@ const writeJsonIfChanged = (filename, newData, outputPath) => {
     fs.mkdirSync(directory, { recursive: true }); // Ensure directory exists
     fs.writeFileSync(filePath, JSON.stringify(newData));
   } else {
-    logger.info(
+    logger.custom(
       `${chalk.yellowBright("❯")} Skipped (no changes): ${chalk.yellowBright(filePath)}`,
     );
   }
@@ -99,5 +97,7 @@ export const preBuildDevelopment = async () => {
   // Run all tasks concurrently
   await Promise.all([...prebuildTasks, ...imageDownloadTasks]);
 
-  logger.success("Pre-Build Data & Images Generated Successfully!");
+  logger.custom(
+    chalk.bgGreenBright("Pre-Build Data & Images Generated Successfully!"),
+  );
 };
