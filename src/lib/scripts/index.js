@@ -43,7 +43,9 @@ const writeJsonIfChanged = (filename, newData, outputPath) => {
     fs.mkdirSync(directory, { recursive: true }); // Ensure directory exists
     fs.writeFileSync(filePath, JSON.stringify(newData));
   } else {
-    logger.info(`❯ Skipped (no changes): ${chalk.yellowBright(filePath)}`);
+    logger.info(
+      `${chalk.yellowBright("❯")} Skipped (no changes): ${chalk.yellowBright(filePath)}`,
+    );
   }
 };
 
