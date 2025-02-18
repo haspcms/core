@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import fs from "fs";
 import { Jsona } from "jsona";
 import rc from "rc";
-import logger from "./logger"; // Importing the custom logger
+import logger from "../logger";
 
 dotenv.config();
 const dataFormatter = new Jsona();
