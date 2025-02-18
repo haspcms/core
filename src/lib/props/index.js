@@ -1,5 +1,4 @@
 import { Jsona } from "jsona";
-import rc from "rc";
 import { PAGEAPI } from "../api";
 import {
   contentEntriesPath,
@@ -11,20 +10,17 @@ import { sortBlocks } from "../utils";
 
 const dataFormatter = new Jsona();
 
-export const paths = async (configJS) => {
-  console.log("paths", configJS);
+export const paths = async (config) => {
   try {
     const pages = await pagesPath();
     const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
-    const config = configJS || rc("hasp");
 
-    if (!config || typeof config !== "object") {
-      console.error("Invalid config:", config);
-      return { paths: [], fallback: false };
-    }
+    // TODO allow fallback if no config
+    // if (!config || typeof config !== "object") {
+    //   console.error("Invalid config:", config);
+    //   return { paths: [], fallback: false };
+    // }
 
-    // const configStr = JSON.stringify(configrc, getCircularReplacer(), 2);
-    // console.log("Configuration:", configStr);
     const contentTypes = Object.keys(config?.contents || {});
 
     console.log({ contentTypes });
@@ -47,18 +43,6 @@ export const paths = async (configJS) => {
   }
 };
 
-// Helper function to prevent circular reference errors
-function getCircularReplacer() {
-  const seen = new WeakSet();
-  return (key, value) => {
-    if (typeof value === "object" && value !== null) {
-      if (seen.has(value)) return "[Circular]";
-      seen.add(value);
-    }
-    return value;
-  };
-}
-
 export const props = async (context) => {
   const id = context?.params?.id || [];
   const segment = id.join("/");
@@ -66,9 +50,6 @@ export const props = async (context) => {
     segment,
     "?include=blockContents.block,metaData,content,taxonomyTerms.taxonomy",
   );
-
-  const config = rc("hasp");
-  console.log("props config", { config });
 
   try {
     const page = dataFormatter.deserialize(pageHandler);
@@ -98,18 +79,4 @@ export const props = async (context) => {
       notFound: true,
     };
   }
-};
-
-export const getConfig = () => {
-  const confJSON = rc("hasp");
-
-  // if (!confJSON || typeof confJSON !== "object") {
-  //   console.error("Invalid confJSON:", confJSON);
-  //   return { paths: [], fallback: false };
-  // }
-
-  // const str = JSON.stringify(confJSON, getCircularReplacer(), 2);
-  // console.log("Configuration JSON:", str);
-
-  return confJSON;
 };

@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import fs from "fs";
 import https from "https";
 import { Jsona } from "jsona";
-import rc from "rc";
 
 dotenv.config();
 const dataFormatter = new Jsona();
@@ -32,6 +31,7 @@ const writeJsonIfChanged = (filename, newData, outputPath) => {
   let existingData = null;
   try {
     existingData = fs.readFileSync(filePath, "utf8");
+    // eslint-disable-next-line no-unused-vars
   } catch (error) {
     // File does not exist, proceed with writing
   }
@@ -66,10 +66,8 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
     });
 };
 
-export const preBuildDevelopment = async (configJS) => {
-  console.log("preBuildDevelopment", configJS);
-
-  const config = configJS || rc("hasp");
+export const preBuildDevelopment = async (config) => {
+  console.log("preBuildDevelopment", config);
 
   if (!config || typeof config !== "object") {
     console.error("❌ Invalid config:", config);
@@ -90,14 +88,14 @@ export const preBuildDevelopment = async (configJS) => {
     },
   );
 
-  // // Download all images dynamically
-  // const imageDownloadTasks = (confJSON?.prebuildImages || []).map(
-  //   async ({ url, filename, downloadPath }) => {
-  //     await downloadImage(url, filename, downloadPath);
-  //   },
-  // );
+  // Download all images dynamically
+  const imageDownloadTasks = (config?.prebuildImages || []).map(
+    async ({ url, filename, downloadPath }) => {
+      await downloadImage(url, filename, downloadPath);
+    },
+  );
 
-  await Promise.all([...prebuildTasks]);
+  await Promise.all([...prebuildTasks, ...imageDownloadTasks]);
 
   console.log("✅ Pre-Build Data & Images Generated Successfully!");
 };
