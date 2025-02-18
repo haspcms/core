@@ -1,7 +1,6 @@
 import axios from "axios";
 import dotenv from "dotenv";
 import fs from "fs";
-import https from "https";
 import { Jsona } from "jsona";
 
 dotenv.config();
@@ -46,24 +45,43 @@ const writeJsonIfChanged = (filename, newData, outputPath) => {
 };
 
 // Download and save an image
+// const downloadImage = async (imageUrl, filename, downloadPath) => {
+//   const directory = downloadPath || "./public/images/";
+//   const filePath = `${directory}${filename}`;
+
+//   fs.mkdirSync(directory, { recursive: true }); // Ensure directory exists
+
+//   const file = fs.createWriteStream(filePath);
+//   https
+//     .get(imageUrl, (response) => {
+//       response.pipe(file);
+//       file.on("finish", () => {
+//         file.close();
+//         console.log(`🖼️  Downloaded image: ${filePath}`);
+//       });
+//     })
+//     .on("error", (err) => {
+//       console.error(`❌ Error downloading ${imageUrl}:`, err.message);
+//     });
+// };
+
 const downloadImage = async (imageUrl, filename, downloadPath) => {
   const directory = downloadPath || "./public/images/";
   const filePath = `${directory}${filename}`;
 
-  fs.mkdirSync(directory, { recursive: true }); // Ensure directory exists
+  fs.mkdirSync(directory, { recursive: true });
 
-  const file = fs.createWriteStream(filePath);
-  https
-    .get(imageUrl, (response) => {
-      response.pipe(file);
-      file.on("finish", () => {
-        file.close();
-        console.log(`🖼️  Downloaded image: ${filePath}`);
-      });
-    })
-    .on("error", (err) => {
-      console.error(`❌ Error downloading ${imageUrl}:`, err.message);
-    });
+  try {
+    const response = await fetch(imageUrl);
+    if (!response.ok) throw new Error(`Failed to download: ${response.status}`);
+
+    const buffer = await response.arrayBuffer();
+    fs.writeFileSync(filePath, Buffer.from(buffer));
+
+    console.log(`🖼️  Downloaded image: ${filePath}`);
+  } catch (err) {
+    console.error(`❌ Error downloading ${imageUrl}:`, err.message);
+  }
 };
 
 export const preBuildDevelopment = async (config) => {
