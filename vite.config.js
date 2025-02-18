@@ -18,6 +18,7 @@ export default defineConfig({
         "fs",
         "path",
         "rc",
+        "chalk",
       ],
       output: {
         globals: {
@@ -29,8 +30,12 @@ export default defineConfig({
           rc: "rc",
           fs: "fs",
           path: "path",
+          chalk: "chalk",
         },
       },
     },
+  },
+  optimizeDeps: {
+    include: ["chalk"],
   },
 });
