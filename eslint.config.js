@@ -28,14 +28,15 @@ export default [
       "jsdoc/require-jsdoc": [
         "warn",
         {
-          publicOnly: true,
           require: {
-            FunctionDeclaration: false,
-            ArrowFunctionExpression: false,
-            FunctionExpression: false,
+            FunctionDeclaration: true,
+            ClassDeclaration: true,
+            ArrowFunctionExpression: true,
+            FunctionExpression: true,
           },
         },
       ],
+      "jsdoc/require-description": "warn",
     },
   },
 ];
