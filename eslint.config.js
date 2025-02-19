@@ -1,3 +1,4 @@
+import jsdoc from "eslint-plugin-jsdoc";
 import globals from "globals";
 
 export default [
@@ -10,6 +11,9 @@ export default [
         ...globals.node,
       },
     },
+    plugins: {
+      jsdoc,
+    },
     rules: {
       "no-unused-vars": [
         "warn",
@@ -21,6 +25,17 @@ export default [
       "no-redeclare": "warn",
       "no-self-compare": "warn",
       "no-undef": "error",
+      "jsdoc/require-jsdoc": [
+        "warn",
+        {
+          publicOnly: true,
+          require: {
+            FunctionDeclaration: false,
+            ArrowFunctionExpression: false,
+            FunctionExpression: false,
+          },
+        },
+      ],
     },
   },
 ];
