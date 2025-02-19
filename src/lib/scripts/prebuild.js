@@ -3,6 +3,7 @@ import chalk from "chalk";
 import dotenv from "dotenv";
 import fs from "fs";
 import { Jsona } from "jsona";
+import path from "path";
 import rc from "rc";
 import logger, { formatBGMessage } from "../logger";
 import SYMBOLS from "../logger/symbols";
@@ -22,6 +23,21 @@ const fetchData = async (endpoint, useDeserialization = true) => {
     logger.error(`Error fetching ${endpoint}: ${error.message}`);
     return null;
   }
+};
+
+// Remove all files in the given directory
+export const cleanPrebuildFiles = (directory) => {
+  if (!fs.existsSync(directory)) return;
+
+  const files = fs.readdirSync(directory);
+  if (files.length === 0) return;
+
+  files.forEach((file) => {
+    const filePath = path.join(directory, file);
+    fs.unlinkSync(filePath);
+  });
+
+  logger.success(`Cleaned up old files from ${chalk.greenBright(directory)}`);
 };
 
 // Write JSON only if data is different
@@ -48,6 +64,7 @@ const writeJsonIfChanged = (filename, newData, outputPath) => {
   }
 };
 
+// Download image helper
 const downloadImage = async (imageUrl, filename, downloadPath) => {
   const directory = downloadPath || "./public/images/";
   const filePath = `${directory}${filename}`;
@@ -67,6 +84,7 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
   }
 };
 
+// Main prebuild function
 export const preBuildDevelopment = async () => {
   const config = rc("hasp");
 
