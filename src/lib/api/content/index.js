@@ -2,6 +2,9 @@ import { BaseApi } from "../base-api";
 
 const APIDOMAIN = process.env.NEXT_PUBLIC_TENANT_API;
 const MICROSITE = process.env.NEXT_PUBLIC_MICROSITE_ID || "";
+/**
+ *
+ */
 export class CONTENTAPI {
   static async getContents(id, params = "") {
     const queryParams = params

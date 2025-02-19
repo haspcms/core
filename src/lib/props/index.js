@@ -10,6 +10,9 @@ import { sortBlocks } from "../utils";
 
 const dataFormatter = new Jsona();
 
+/**
+ *
+ */
 export const paths = async (config) => {
   try {
     const pages = await pagesPath();
@@ -43,6 +46,9 @@ export const paths = async (config) => {
   }
 };
 
+/**
+ *
+ */
 export const props = async (context) => {
   const id = context?.params?.id || [];
   const segment = id.join("/");

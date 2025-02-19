@@ -13,6 +13,9 @@ const dataFormatter = new Jsona();
 const BASE_API = process.env.NEXT_PUBLIC_TENANT_API;
 
 // Helper function to fetch API data dynamically
+/**
+ *
+ */
 const fetchData = async (endpoint, useDeserialization = true) => {
   try {
     const response = await axios.get(BASE_API + endpoint);
@@ -26,6 +29,9 @@ const fetchData = async (endpoint, useDeserialization = true) => {
 };
 
 // Remove all files in a directory
+/**
+ *
+ */
 const cleanDirectory = (directory) => {
   if (!fs.existsSync(directory)) return;
   const files = fs.readdirSync(directory);
@@ -40,6 +46,9 @@ const cleanDirectory = (directory) => {
 };
 
 // Automatically detect and clean all prebuild directories
+/**
+ *
+ */
 export const cleanAllPrebuildFiles = () => {
   const config = rc("hasp");
   if (!config || typeof config !== "object") {
@@ -58,6 +67,9 @@ export const cleanAllPrebuildFiles = () => {
 };
 
 // Write JSON only if data is different
+/**
+ *
+ */
 const writeJsonIfChanged = (filename, newData, outputPath) => {
   const directory = outputPath || "./lib/preBuildScripts/static/";
   const filePath = `${directory}${filename}`;
@@ -82,6 +94,9 @@ const writeJsonIfChanged = (filename, newData, outputPath) => {
 };
 
 // Download image helper
+/**
+ *
+ */
 const downloadImage = async (imageUrl, filename, downloadPath) => {
   const directory = downloadPath || "./public/images/";
   const filePath = `${directory}${filename}`;
@@ -102,6 +117,9 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
 };
 
 // Main prebuild function
+/**
+ *
+ */
 export const preBuildDevelopment = async () => {
   const config = rc("hasp");
 

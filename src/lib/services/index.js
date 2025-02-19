@@ -1,6 +1,9 @@
 import { Jsona } from "jsona";
 import { CONTENTAPI, FORMAPI, PAGEAPI, TAXONOMYAPI } from "../api";
 const dataFormatter2 = new Jsona();
+/**
+ *
+ */
 export const dataFetcher = async (handler) => {
   await Promise.all(
     Object.keys(handler?.data || {}).map(async (key1) => {
@@ -67,6 +70,9 @@ export const dataFetcher = async (handler) => {
     "mediaHandler",
   );
 };
+/**
+ *
+ */
 export const clean = (data) => {
   delete data?.links;
   delete data?.meta;
@@ -74,6 +80,9 @@ export const clean = (data) => {
   delete data?.relationships;
   return data;
 };
+/**
+ *
+ */
 export async function iterateBlock(blocks) {
   return await Promise.all(
     blocks.map(async (block) => {
@@ -81,9 +90,15 @@ export async function iterateBlock(blocks) {
     }),
   );
 }
+/**
+ *
+ */
 export async function iteratePage(page) {
   return await dataFetcher(page);
 }
+/**
+ *
+ */
 export async function pagesPath() {
   const pagesHandler = await PAGEAPI.getPages();
   const pages = dataFormatter2.deserialize(pagesHandler);
@@ -100,6 +115,9 @@ export async function pagesPath() {
   }
   return allData;
 }
+/**
+ *
+ */
 export async function contentEntriesPath(content) {
   const contentsHandler = await CONTENTAPI.getContents(content);
   const contents = dataFormatter2.deserialize(contentsHandler);
@@ -118,6 +136,9 @@ export async function contentEntriesPath(content) {
   return allData;
 }
 
+/**
+ *
+ */
 export function getMediaConvertions(blueprintData = []) {
   const media = {};
   blueprintData?.forEach((e) => {
@@ -133,6 +154,9 @@ export function getMediaConvertions(blueprintData = []) {
   return media;
 }
 
+/**
+ *
+ */
 export function replaceAndFormatMediaConvertions(obj, searchKey, replaceKey) {
   // Check if the input is an object
   if (typeof obj !== "object" || obj === null) {
@@ -169,6 +193,9 @@ export function replaceAndFormatMediaConvertions(obj, searchKey, replaceKey) {
   return result;
 }
 
+/**
+ *
+ */
 export const consoleServices = () => {
   console.log("console services");
 };

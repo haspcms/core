@@ -1,5 +1,8 @@
 // import { parseCookies } from "nookies";
 const RATE_LIMIT_KEY = process.env.RATE_LIMIT_KEY || "";
+/**
+ *
+ */
 export default function setup(axios) {
   axios.interceptors.request.use((config) => {
     config.headers["X-Rate-Key"] = RATE_LIMIT_KEY;

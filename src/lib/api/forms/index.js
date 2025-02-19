@@ -2,6 +2,9 @@ import { BaseApi } from "../base-api";
 
 const APIDOMAIN = process.env.NEXT_PUBLIC_TENANT_API;
 
+/**
+ *
+ */
 export class FORMAPI {
   static async findForm(id, params = "") {
     const res = await BaseApi.get(APIDOMAIN + "/api/forms/" + id + params);
