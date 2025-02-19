@@ -25,10 +25,9 @@ const fetchData = async (endpoint, useDeserialization = true) => {
   }
 };
 
-// Remove all files in the given directory
-export const cleanPrebuildFiles = (directory) => {
+// Remove all files in a directory
+const cleanDirectory = (directory) => {
   if (!fs.existsSync(directory)) return;
-
   const files = fs.readdirSync(directory);
   if (files.length === 0) return;
 
@@ -40,6 +39,24 @@ export const cleanPrebuildFiles = (directory) => {
   logger.success(`Cleaned up old files from ${chalk.greenBright(directory)}`);
 };
 
+// Automatically detect and clean all prebuild directories
+const cleanAllPrebuildFiles = () => {
+  const config = rc("hasp");
+  if (!config || typeof config !== "object") {
+    logger.warn("No valid configuration found. Skipping cleanup.");
+    return;
+  }
+
+  const outputPaths = new Set([
+    ...(config.prebuildJSONS || []).map((item) => item.outputPath),
+    ...(config.prebuildImages || []).map((item) => item.downloadPath),
+  ]);
+
+  logger.info("Cleaning all detected prebuild directories...");
+  outputPaths.forEach(cleanDirectory);
+  logger.success("Prebuild cleanup completed successfully.");
+};
+
 // Write JSON only if data is different
 const writeJsonIfChanged = (filename, newData, outputPath) => {
   const directory = outputPath || "./lib/preBuildScripts/static/";
@@ -48,14 +65,13 @@ const writeJsonIfChanged = (filename, newData, outputPath) => {
   let existingData = null;
   try {
     existingData = fs.readFileSync(filePath, "utf8");
-    // eslint-disable-next-line no-unused-vars
   } catch (error) {
     // File does not exist, proceed with writing
   }
 
   if (existingData !== JSON.stringify(newData)) {
     logger.success(`Generated JSON: ${chalk.greenBright(filePath)}`);
-    fs.mkdirSync(directory, { recursive: true }); // Ensure directory exists
+    fs.mkdirSync(directory, { recursive: true });
     fs.writeFileSync(filePath, JSON.stringify(newData));
   } else {
     logger.custom(
@@ -93,6 +109,8 @@ export const preBuildDevelopment = async () => {
     logger.warn("Aborting prebuild script...");
     return;
   }
+
+  cleanAllPrebuildFiles(); // Automatically clean up before running prebuild tasks
 
   logger.custom(
     chalk.bgBlueBright.black(
