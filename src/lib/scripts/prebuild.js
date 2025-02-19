@@ -40,7 +40,7 @@ const cleanDirectory = (directory) => {
 };
 
 // Automatically detect and clean all prebuild directories
-const cleanAllPrebuildFiles = () => {
+export const cleanAllPrebuildFiles = () => {
   const config = rc("hasp");
   if (!config || typeof config !== "object") {
     logger.warn("No valid configuration found. Skipping cleanup.");
@@ -109,8 +109,6 @@ export const preBuildDevelopment = async () => {
     logger.warn("Aborting prebuild script...");
     return;
   }
-
-  cleanAllPrebuildFiles(); // Automatically clean up before running prebuild tasks
 
   logger.custom(
     chalk.bgBlueBright.black(
