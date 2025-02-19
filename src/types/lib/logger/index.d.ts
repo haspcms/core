@@ -8,3 +8,4 @@ declare namespace logger {
   function debug(...message: any[]): void;
   function custom(...message: any[]): void;
 }
+//# sourceMappingURL=index.d.ts.map

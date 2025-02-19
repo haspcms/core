@@ -8,3 +8,4 @@ declare namespace SYMBOLS {
   let radioOff: string;
   let reload: string;
 }
+//# sourceMappingURL=symbols.d.ts.map

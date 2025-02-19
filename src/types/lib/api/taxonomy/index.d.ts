@@ -1,3 +1,6 @@
+/**
+ *
+ */
 export class TAXONOMYAPI {
   static getTaxonomies(params?: string): Promise<any>;
   static findTaxonomy(id: any, params?: string): Promise<any>;
@@ -12,3 +15,4 @@ export class TAXONOMYAPI {
     error: any;
   };
 }
+//# sourceMappingURL=index.d.ts.map

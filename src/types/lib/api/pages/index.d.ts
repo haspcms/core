@@ -1,3 +1,6 @@
+/**
+ *
+ */
 export class PAGEAPI {
   static getPages(params?: string): Promise<any>;
   static findPage(id: any, params?: string): Promise<any>;
@@ -23,3 +26,4 @@ export class PAGEAPI {
   };
   static findByRoute(id: any, params?: string): Promise<any>;
 }
+//# sourceMappingURL=index.d.ts.map

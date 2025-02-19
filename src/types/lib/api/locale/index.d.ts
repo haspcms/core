@@ -1,3 +1,6 @@
+/**
+ *
+ */
 export class LOCALEAPI {
   static getLocales(params?: string): Promise<any>;
   static getLocalesSwr(
@@ -10,3 +13,4 @@ export class LOCALEAPI {
     error: any;
   };
 }
+//# sourceMappingURL=index.d.ts.map

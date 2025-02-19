@@ -1,3 +1,6 @@
+/**
+ *
+ */
 export class FORMAPI {
   static findForm(id: any, params?: string): Promise<any>;
   static findFormsSwr(
@@ -26,3 +29,4 @@ export class FORMAPI {
     type: any,
   ): Promise<any>;
 }
+//# sourceMappingURL=index.d.ts.map

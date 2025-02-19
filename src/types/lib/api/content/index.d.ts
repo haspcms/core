@@ -1,3 +1,6 @@
+/**
+ *
+ */
 export class CONTENTAPI {
   static getContents(id: any, params?: string): Promise<any>;
   static findEntry(contentId: any, entryId: any, params?: string): Promise<any>;
@@ -12,3 +15,4 @@ export class CONTENTAPI {
     error: any;
   };
 }
+//# sourceMappingURL=index.d.ts.map

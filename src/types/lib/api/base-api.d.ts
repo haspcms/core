@@ -71,3 +71,4 @@ export class BaseApi {
    */
   static customPut(URL: string, data: object, headers: object): Promise<any>;
 }
+//# sourceMappingURL=base-api.d.ts.map

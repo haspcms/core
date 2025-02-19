@@ -19,3 +19,4 @@ export function props(context: any): Promise<
       props?: undefined;
     }
 >;
+//# sourceMappingURL=index.d.ts.map

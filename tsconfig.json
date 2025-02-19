@@ -2,9 +2,11 @@
   "compilerOptions": {
     "allowJs": true,
     "declaration": true,
+    "declarationMap": true,
     "emitDeclarationOnly": true,
     "outDir": "./src/types",
-    "noEmit": false
+    "noEmit": false,
+    "skipLibCheck": true
   },
   "include": ["src/**/*.js"]
 }
