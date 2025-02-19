@@ -10,6 +10,7 @@
   },
   "main": "./dist/core.umd.cjs",
   "module": "./dist/core.js",
+  "types": "./src/index.d.ts",
   "files": [
     "dist/**",
     "README.md"
