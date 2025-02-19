@@ -1,6 +1,10 @@
 import chalk from "chalk";
 import SYMBOLS from "./symbols";
 
+export const formatBGMessage = (...message) => {
+  return `\n ${message.join(" ")} \n`;
+};
+
 const logger = {
   info: (...message) => {
     console.log(chalk.cyanBright(SYMBOLS.info), ...message);

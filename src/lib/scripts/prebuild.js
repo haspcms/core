@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import fs from "fs";
 import { Jsona } from "jsona";
 import rc from "rc";
-import logger from "../logger";
+import logger, { formatBGMessage } from "../logger";
 import SYMBOLS from "../logger/symbols";
 
 dotenv.config();
@@ -77,7 +77,9 @@ export const preBuildDevelopment = async () => {
   }
 
   logger.custom(
-    chalk.bgBlueBright.black(SYMBOLS.reload, "Running pre-build tasks..."),
+    chalk.bgBlueBright.black(
+      formatBGMessage(SYMBOLS.reload, "Running pre-build tasks..."),
+    ),
   );
 
   // Fetch all prebuild JSONs dynamically
@@ -102,8 +104,10 @@ export const preBuildDevelopment = async () => {
 
   logger.custom(
     chalk.bgGreenBright.black(
-      SYMBOLS.tick,
-      "All pre-build tasks executed successfully!",
+      formatBGMessage(
+        SYMBOLS.tick,
+        "All pre-build tasks executed successfully!",
+      ),
     ),
   );
 };
