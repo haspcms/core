@@ -65,6 +65,7 @@ const writeJsonIfChanged = (filename, newData, outputPath) => {
   let existingData = null;
   try {
     existingData = fs.readFileSync(filePath, "utf8");
+    // eslint-disable-next-line no-unused-vars
   } catch (error) {
     // File does not exist, proceed with writing
   }
