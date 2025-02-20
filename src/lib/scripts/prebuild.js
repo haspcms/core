@@ -12,9 +12,11 @@ dotenv.config();
 const dataFormatter = new Jsona();
 const BASE_API = process.env.NEXT_PUBLIC_TENANT_API;
 
-// Helper function to fetch API data dynamically
 /**
- *
+ * Fetch API data dynamically.
+ * @param {string} endpoint - The API endpoint to fetch data from.
+ * @param {boolean} [useDeserialization=true] - Whether to deserialize the data using Jsona.
+ * @returns {Promise<object|null>} - Returns the fetched data or null if an error occurred.
  */
 const fetchData = async (endpoint, useDeserialization = true) => {
   try {
@@ -28,9 +30,9 @@ const fetchData = async (endpoint, useDeserialization = true) => {
   }
 };
 
-// Remove all files in a directory
 /**
- *
+ * Remove all files in a directory.
+ * @param {string} directory - The directory path whose files are to be removed.
  */
 const cleanDirectory = (directory) => {
   if (!fs.existsSync(directory)) return;
@@ -45,9 +47,8 @@ const cleanDirectory = (directory) => {
   logger.success(`Cleaned up old files from ${chalk.greenBright(directory)}`);
 };
 
-// Automatically detect and clean all prebuild directories
 /**
- *
+ * Automatically detect and clean all prebuild directories.
  */
 export const cleanAllPrebuildFiles = () => {
   const config = rc("hasp");
@@ -66,9 +67,11 @@ export const cleanAllPrebuildFiles = () => {
   logger.success("Prebuild cleanup completed successfully.");
 };
 
-// Write JSON only if data is different
 /**
- *
+ * Write JSON data to a file only if the data has changed.
+ * @param {string} filename - The filename for the JSON file.
+ * @param {object} newData - The new data to write to the file.
+ * @param {string} [outputPath] - The output path for the JSON file. Defaults to a static directory.
  */
 const writeJsonIfChanged = (filename, newData, outputPath) => {
   const directory = outputPath || "./lib/preBuildScripts/static/";
@@ -93,9 +96,11 @@ const writeJsonIfChanged = (filename, newData, outputPath) => {
   }
 };
 
-// Download image helper
 /**
- *
+ * Download an image from a URL and save it to a specified path.
+ * @param {string} imageUrl - The URL of the image to download.
+ * @param {string} filename - The filename to save the downloaded image.
+ * @param {string} [downloadPath] - The directory path to save the image. Defaults to a public images directory.
  */
 const downloadImage = async (imageUrl, filename, downloadPath) => {
   const directory = downloadPath || "./public/images/";
@@ -116,9 +121,8 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
   }
 };
 
-// Main prebuild function
 /**
- *
+ * Main prebuild function to handle the development prebuild tasks.
  */
 export const preBuildDevelopment = async () => {
   const config = rc("hasp");
