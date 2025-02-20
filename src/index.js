@@ -1,5 +1,4 @@
-export * from "./lib/api/base-api";
-export * from "./lib/props";
-export * from "./lib/scripts/prebuild";
-export * from "./lib/services";
-export * from "./lib/utils/index";
+// Centralized export file for easier import and type generation in TypeScript
+
+// Re-exporting modules to ensure that TypeScript can generate types correctly and comprehensively
+export * from "./lib/index";

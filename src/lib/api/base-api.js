@@ -2,7 +2,10 @@ import axios from "axios";
 import UseSWR from "swr";
 import interceptorSetup from "./interceptor";
 
+// Set up interceptors on the global axios instance
 interceptorSetup(axios);
+
+// Create a basic Axios instance without interceptors
 const basicAxios = axios.create();
 
 /**
@@ -21,7 +24,7 @@ export class BaseApi {
   /**
    * Perform a POST request.
    * @param {string} URL - The endpoint URL.
-   * @param {object} data - The request payload.
+   * @param {object} data - The request payload to send with the POST request.
    * @returns {Promise<any>} - The response data.
    * @throws {Error} - Throws an error if the request fails.
    */
@@ -37,7 +40,7 @@ export class BaseApi {
   /**
    * Perform a PUT request.
    * @param {string} URL - The endpoint URL.
-   * @param {object} data - The request payload.
+   * @param {object} data - The request payload for updating resources.
    * @returns {Promise<any>} - The response data.
    * @throws {Error} - Throws an error if the request fails.
    */
@@ -53,7 +56,7 @@ export class BaseApi {
   /**
    * Perform a PATCH request.
    * @param {string} URL - The endpoint URL.
-   * @param {object} data - The request payload.
+   * @param {object} data - The request payload containing partial updates.
    * @returns {Promise<any>} - The response data.
    * @throws {Error} - Throws an error if the request fails.
    */
@@ -68,7 +71,7 @@ export class BaseApi {
 
   /**
    * Perform a DELETE request.
-   * @param {string} URL - The endpoint URL.
+   * @param {string} URL - The endpoint URL of the resource to delete.
    * @returns {Promise<any>} - The response data.
    * @throws {Error} - Throws an error if the request fails.
    */
@@ -82,17 +85,18 @@ export class BaseApi {
   }
 
   /**
-   * Use SWR for data fetching with caching.
+   * Use SWR for data fetching with caching benefits.
    * @see https://swr.vercel.app/docs/api
    * @param {string} URL - The endpoint URL.
-   * @param {object} [options={}] - SWR options.
+   * @param {object} [options={}] - Options to configure SWR behavior.
    * @returns {{ data: any, mutate: Function, isValidating: boolean, error: any }} - SWR result object.
    */
   static swr(URL, options = {}) {
     /**
-     * Fetcher function for SWR, using the `get` method of `BaseApi`.
+     * Fetcher function for SWR, formats how data is fetched.
+     * Uses the `get` method of `BaseApi`.
      * @param {string} link - The endpoint URL to fetch data from.
-     * @returns {Promise<any>} - The response data from the API.
+     * @returns {Promise<any>} - The API response data.
      */
     const fetcher = (link) => this.get(link);
 
@@ -103,7 +107,7 @@ export class BaseApi {
       options,
     );
     return {
-      data: data ? data.data : data,
+      data: data ? data.data : data, // Handle nested data format
       mutate,
       isValidating,
       error,
@@ -111,7 +115,7 @@ export class BaseApi {
   }
 
   /**
-   * Perform a GET request without interceptors.
+   * Perform a GET request without using predefined interceptors.
    * @param {string} URL - The endpoint URL.
    * @param {object} headers - Custom request headers.
    * @returns {Promise<any>} - The response data.
@@ -121,10 +125,10 @@ export class BaseApi {
   }
 
   /**
-   * Perform a PUT request without interceptors.
+   * Perform a PUT request without using predefined interceptors.
    * @param {string} URL - The endpoint URL.
-   * @param {object} data - The request payload.
-   * @param {object} headers - Custom request headers.
+   * @param {object} data - The request payload to update resources.
+   * @param {object} headers - Custom request headers defining additional info.
    * @returns {Promise<any>} - The response data.
    */
   static async customPut(URL, data, headers) {
