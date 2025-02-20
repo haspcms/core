@@ -12,6 +12,9 @@ dotenv.config();
 const dataFormatter = new Jsona();
 const BASE_API = process.env.NEXT_PUBLIC_TENANT_API;
 
+const config = rc("hasp");
+console.log("HASP CONFIG", config);
+
 /**
  * Fetch API data dynamically.
  * @param {string} endpoint - The API endpoint to fetch data from.
