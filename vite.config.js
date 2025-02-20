@@ -43,7 +43,9 @@ export default defineConfig({
     dts({
       outDir: "dist",
       insertTypesEntry: true,
-      tsconfigPath: "./tsconfig.json",
+      rollupTypes: true, // Ensures types are properly bundled
+      include: ["src/**/*.js"], // Ensures proper inclusion
+      // tsconfigPath: "./tsconfig.json",
     }),
   ],
 });
