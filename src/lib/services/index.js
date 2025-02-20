@@ -8,11 +8,11 @@ const dataFormatter2 = new Jsona();
  * @param {Object} handler - The handler containing data to be processed.
  * @returns {Promise<Object>} The processed handler with updated data.
  */
-export const dataFetcher = async (handler) => {
+export async function dataFetcher(handler) {
   await Promise.all(
-    Object.keys(handler?.data || {}).map(async (key1) => {
+    Object.keys(handler?.data || {}).map(async function (key1) {
       return await Promise.all(
-        Object.keys(handler?.data?.[key1] || {}).map(async (key2) => {
+        Object.keys(handler?.data?.[key1] || {}).map(async function (key2) {
           if (
             key2.includes("preload") ||
             key2 === "collection" ||
@@ -72,7 +72,7 @@ export const dataFetcher = async (handler) => {
     "blueprintData",
     "mediaHandler",
   );
-};
+}
 
 /**
  * Cleans up the data object by removing unnecessary properties.
@@ -80,13 +80,13 @@ export const dataFetcher = async (handler) => {
  * @param {Object} data - The data object to be cleaned.
  * @returns {Object} The cleaned data object.
  */
-export const clean = (data) => {
+export function clean(data) {
   delete data?.links;
   delete data?.meta;
   delete data?.relationshipNames;
   delete data?.relationships;
   return data;
-};
+}
 
 /**
  * Iterates over blocks, applying the dataFetcher for each block.
@@ -188,19 +188,16 @@ export function getMediaConvertions(blueprintData = []) {
  * @returns {Object} The object with replaced key/values.
  */
 export function replaceAndFormatMediaConvertions(obj, searchKey, replaceKey) {
-  // Check if the input is an object
   if (typeof obj !== "object" || obj === null) {
     return obj;
   }
 
-  // If the current object is an array, iterate through its elements
   if (Array.isArray(obj)) {
-    return obj.map((item) =>
-      replaceAndFormatMediaConvertions(item, searchKey, replaceKey),
-    );
+    return obj.map(function (item) {
+      return replaceAndFormatMediaConvertions(item, searchKey, replaceKey);
+    });
   }
 
-  // Create a new object to hold the replaced key/value pairs
   const result = {};
 
   for (const key in obj) {
