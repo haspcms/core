@@ -15,13 +15,13 @@ export function sortBlocks(list) {
  * obj.self = obj;
  * JSON.stringify(obj, getCircularReplacer());
  */
-export const getCircularReplacer = () => {
+export function getCircularReplacer() {
   const seen = new WeakSet();
-  return (key, value) => {
+  return function (key, value) {
     if (typeof value === "object" && value !== null) {
       if (seen.has(value)) return "[Circular]";
       seen.add(value);
     }
     return value;
   };
-};
+}
