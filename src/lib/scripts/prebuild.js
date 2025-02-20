@@ -19,6 +19,7 @@ const BASE_API = process.env.NEXT_PUBLIC_TENANT_API;
  * @returns {Promise<object|null>} - Returns the fetched data or null if an error occurred.
  */
 const fetchData = async (endpoint, useDeserialization = true) => {
+  console.log({ endpoint });
   try {
     const response = await axios.get(BASE_API + endpoint);
     return useDeserialization
@@ -126,6 +127,7 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
  */
 export const preBuildDevelopment = async () => {
   const config = rc("hasp");
+  console.log({ config });
 
   if (!config || typeof config !== "object") {
     logger.error(`Invalid config: ${config}`);
