@@ -19,9 +19,10 @@ const BASE_API = process.env.NEXT_PUBLIC_TENANT_API;
  * @returns {Promise<object|null>} - Returns the fetched data or null if an error occurred.
  */
 const fetchData = async (endpoint, useDeserialization = true) => {
-  console.log({ endpoint });
+  console.log({ BASE_API, endpoint });
   try {
     const response = await axios.get(BASE_API + endpoint);
+    console.log({ response });
     return useDeserialization
       ? dataFormatter.deserialize(response.data)
       : response.data;
