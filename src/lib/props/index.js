@@ -1,5 +1,6 @@
 import { Jsona } from "jsona";
 import { PAGEAPI } from "../api";
+import logger from "../logger";
 import {
   contentEntriesPath,
   iterateBlock,
@@ -11,22 +12,26 @@ import { sortBlocks } from "../utils";
 const dataFormatter = new Jsona();
 
 /**
+ * Generates paths intended for use with Next.js static site generation.
  *
+ * @see {@link https://nextjs.org/docs/api-reference/data-fetching/get-static-paths}
+ *
+ * @param {Object} config - Configuration object containing content types.
+ * @param {Object.<string, any>} config.contents - An object representing content types.
+ * @returns {Promise<import('next').GetStaticPathsResult>}
+ *    An object containing `paths` for static generation and `fallback` behavior.
  */
 export const paths = async (config) => {
   try {
     const pages = await pagesPath();
     const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
 
-    // TODO allow fallback if no config
-    // if (!config || typeof config !== "object") {
-    //   console.error("Invalid config:", config);
-    //   return { paths: [], fallback: false };
-    // }
+    if (!config || typeof config !== "object") {
+      logger.error("Invalid config:", config);
+    }
 
     const contentTypes = Object.keys(config?.contents || {});
 
-    console.log({ contentTypes });
     const contentData = await Promise.all(
       contentTypes.map(async (contentType) => {
         return await contentEntriesPath(contentType);
@@ -47,7 +52,13 @@ export const paths = async (config) => {
 };
 
 /**
+ * Prepares properties for rendering a page in a Next.js application.
  *
+ * @see {@link https://nextjs.org/docs/api-reference/data-fetching/get-static-props}
+ *
+ * @param {import('next').GetStaticPropsContext} context - The context containing routing parameters.
+ * @returns {Promise<import('next').GetStaticPropsResult<any>>}
+ *    An object with either `props` for the page or `notFound`.
  */
 export const props = async (context) => {
   const id = context?.params?.id || [];

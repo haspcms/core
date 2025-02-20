@@ -1,8 +1,12 @@
 import { Jsona } from "jsona";
 import { CONTENTAPI, FORMAPI, PAGEAPI, TAXONOMYAPI } from "../api";
 const dataFormatter2 = new Jsona();
+
 /**
+ * Asynchronously fetches and processes data based on the handler configuration.
  *
+ * @param {Object} handler - The handler containing data to be processed.
+ * @returns {Promise<Object>} The processed handler with updated data.
  */
 export const dataFetcher = async (handler) => {
   await Promise.all(
@@ -40,7 +44,6 @@ export const dataFetcher = async (handler) => {
               const params = `?page[size]=${limit}&sort=${sort_by}&${filters}`;
               const res = await CONTENTAPI.getContents(data.id, params);
               const dataHandler = dataFormatter2.deserialize(res);
-              console.log({ dataHandler });
               data.contents = clean(dataHandler);
               const { meta } = res;
               delete meta?.links;
@@ -70,8 +73,12 @@ export const dataFetcher = async (handler) => {
     "mediaHandler",
   );
 };
+
 /**
+ * Cleans up the data object by removing unnecessary properties.
  *
+ * @param {Object} data - The data object to be cleaned.
+ * @returns {Object} The cleaned data object.
  */
 export const clean = (data) => {
   delete data?.links;
@@ -80,8 +87,12 @@ export const clean = (data) => {
   delete data?.relationships;
   return data;
 };
+
 /**
+ * Iterates over blocks, applying the dataFetcher for each block.
  *
+ * @param {Array} blocks - The blocks to process.
+ * @returns {Promise<Array>} An array of processed blocks.
  */
 export async function iterateBlock(blocks) {
   return await Promise.all(
@@ -90,14 +101,21 @@ export async function iterateBlock(blocks) {
     }),
   );
 }
+
 /**
+ * Processes a page using the dataFetcher.
  *
+ * @param {Object} page - The page data to process.
+ * @returns {Promise<Object>} The processed page data.
  */
 export async function iteratePage(page) {
   return await dataFetcher(page);
 }
+
 /**
+ * Retrieves and compiles all pages data.
  *
+ * @returns {Promise<Array>} An array containing all pages data.
  */
 export async function pagesPath() {
   const pagesHandler = await PAGEAPI.getPages();
@@ -115,8 +133,12 @@ export async function pagesPath() {
   }
   return allData;
 }
+
 /**
+ * Gathers all entries from specified content.
  *
+ * @param {string} content - The content identifier.
+ * @returns {Promise<Array>} An array of all content entries.
  */
 export async function contentEntriesPath(content) {
   const contentsHandler = await CONTENTAPI.getContents(content);
@@ -137,7 +159,10 @@ export async function contentEntriesPath(content) {
 }
 
 /**
+ * Extracts media conversions from blueprint data.
  *
+ * @param {Array} blueprintData - The array containing media data in blueprint.
+ * @returns {Object} An object with media conversions.
  */
 export function getMediaConvertions(blueprintData = []) {
   const media = {};
@@ -155,7 +180,12 @@ export function getMediaConvertions(blueprintData = []) {
 }
 
 /**
+ * Recursively replaces and formats media conversions in an object.
  *
+ * @param {Object} obj - The target object to process.
+ * @param {string} searchKey - The key to search for in the object.
+ * @param {string} replaceKey - The key to replace in the object.
+ * @returns {Object} The object with replaced key/values.
  */
 export function replaceAndFormatMediaConvertions(obj, searchKey, replaceKey) {
   // Check if the input is an object
@@ -192,10 +222,3 @@ export function replaceAndFormatMediaConvertions(obj, searchKey, replaceKey) {
 
   return result;
 }
-
-/**
- *
- */
-export const consoleServices = () => {
-  console.log("console services");
-};
