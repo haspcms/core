@@ -21,7 +21,7 @@ const dataFormatter = new Jsona();
  * @returns {Promise<import('next').GetStaticPathsResult>}
  *    An object containing `paths` for static generation and `fallback` behavior.
  */
-export const paths = async (config) => {
+export async function paths(config) {
   try {
     const pages = await pagesPath();
     const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
@@ -49,7 +49,7 @@ export const paths = async (config) => {
   } catch (error) {
     return { paths: [], fallback: false };
   }
-};
+}
 
 /**
  * Prepares properties for rendering a page in a Next.js application.
@@ -60,7 +60,7 @@ export const paths = async (config) => {
  * @returns {Promise<import('next').GetStaticPropsResult<any>>}
  *    An object with either `props` for the page or `notFound`.
  */
-export const props = async (context) => {
+export async function props(context) {
   const id = context?.params?.id || [];
   const segment = id.join("/");
   const pageHandler = await PAGEAPI.findByRoute(
@@ -96,4 +96,4 @@ export const props = async (context) => {
       notFound: true,
     };
   }
-};
+}

@@ -7,9 +7,9 @@ import SYMBOLS from "./symbols";
  * @param {...string} message - A list of strings to format and join.
  * @returns {string} A formatted string surrounded by newline characters.
  */
-export const formatBGMessage = (...message) => {
+export function formatBGMessage(...message) {
   return `\n ${message.join(" ")} \n`;
-};
+}
 
 const logger = {
   /**
