@@ -6,7 +6,7 @@ const SYMBOLS = {
   tick: "✔",
   info: "ℹ",
   warning: "⚠️",
-  cross: "✘",
+  cross: "✖",
   radioOn: "◉",
   radioOff: "◯",
   reload: "↻",
