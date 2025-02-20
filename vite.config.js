@@ -43,7 +43,6 @@ export default defineConfig({
     dts({
       outDir: "dist",
       insertTypesEntry: true,
-      rollupTypes: true,
       tsconfigPath: "./tsconfig.json",
     }),
   ],
