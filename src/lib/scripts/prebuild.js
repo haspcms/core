@@ -14,7 +14,7 @@ const BASE_API = process.env.NEXT_PUBLIC_TENANT_API;
 
 const config = rc("hasp");
 console.log("HASP CONFIG", config);
-
+console.log("test");
 /**
  * Fetch API data dynamically.
  * @param {string} endpoint - The API endpoint to fetch data from.
