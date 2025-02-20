@@ -25,7 +25,7 @@ const fetchData = async (endpoint, useDeserialization = true) => {
       ? dataFormatter.deserialize(response.data)
       : response.data;
   } catch (error) {
-    logger.error(`Error fetching ${endpoint}: ${error.message}`);
+    logger.error(`Error fetching ${endpoint}: ${error?.message}`);
     return null;
   }
 };
