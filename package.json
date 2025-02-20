@@ -11,6 +11,7 @@
   },
   "main": "./dist/core.umd.cjs",
   "module": "./dist/core.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist/**",
     "README.md"

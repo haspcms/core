@@ -36,16 +36,11 @@ export default defineConfig({
       },
     },
   },
-  optimizeDeps: {
-    include: ["chalk"],
-  },
   plugins: [
     dts({
       outDir: "dist",
       insertTypesEntry: true,
-      rollupTypes: true, // Ensures types are properly bundled
-      include: ["src/**/*.js"], // Ensures proper inclusion
-      // tsconfigPath: "./tsconfig.json",
+      rollupTypes: true,
     }),
   ],
 });
