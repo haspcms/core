@@ -4,13 +4,13 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/core.js",
       "require": "./dist/core.umd.cjs"
     }
   },
   "main": "./dist/core.umd.cjs",
   "module": "./dist/core.js",
-  "types": "./dist/index.d.ts",
   "files": [
     "dist/**",
     "README.md"

@@ -41,8 +41,10 @@ export default defineConfig({
   },
   plugins: [
     dts({
-      outDir: "./dist",
+      outDir: "dist",
       insertTypesEntry: true,
+      rollupTypes: true,
+      tsconfigPath: "./tsconfig.json",
     }),
   ],
 });
