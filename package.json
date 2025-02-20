@@ -1,17 +1,17 @@
 {
   "name": "@haspcms/core",
-  "version": "0.2.32",
+  "version": "0.2.31",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/types/index.d.ts",
+      "types": "./dist/index.d.ts",
       "import": "./dist/core.js",
       "require": "./dist/core.umd.cjs"
     }
   },
   "main": "./dist/core.umd.cjs",
   "module": "./dist/core.js",
-  "types": "./dist/types/index.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist/**",
     "README.md"
