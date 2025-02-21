@@ -15,6 +15,7 @@ if (envConfig.error) {
 }
 
 console.log(process.env);
+console.log(envConfig);
 
 // Load rc config and merge with environment variables
 const config = {
