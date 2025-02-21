@@ -8,11 +8,23 @@ import rc from "rc";
 import logger, { formatBGMessage } from "../logger";
 import SYMBOLS from "../logger/symbols";
 
-dotenv.config();
-const dataFormatter = new Jsona();
-const BASE_API = process.env.NEXT_PUBLIC_TENANT_API;
+// Load environment variables first
+const envConfig = dotenv.config();
+if (envConfig.error) {
+  logger.warn("No .env file found or error loading it");
+}
 
-const config = rc("hasp");
+console.log(process.env);
+
+// Load rc config and merge with environment variables
+const config = {
+  ...rc("hasp", {}), // Default empty object if no rc file found
+  // ...process.env, // Override with environment variables
+};
+
+const dataFormatter = new Jsona();
+const BASE_API = config.NEXT_PUBLIC_TENANT_API;
+
 console.log("HASP CONFIG", config);
 console.log("test");
 /**
