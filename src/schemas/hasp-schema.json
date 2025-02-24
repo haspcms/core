@@ -1,11 +1,15 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://unpkg.com/@haspcms/core@0.3.0/src/schemas/hasp-schema.json",
+  "$id": "https://unpkg.com/@haspcms/core@0.3.1/src/schemas/hasp-schema.json",
   "title": "HASP CMS Configuration",
   "description": "Configuration schema for HASP CMS prebuild operations",
   "type": "object",
   "additionalProperties": false,
   "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON Schema reference"
+    },
     "prebuildJSONS": {
       "type": "array",
       "description": "List of JSON endpoints to fetch and cache during prebuild",
@@ -19,8 +23,8 @@
           },
           "endpoint": {
             "type": "string",
-            "format": "uri",
-            "description": "URL endpoint to fetch the JSON data from"
+            "pattern": "^(/[^/]+)+$",
+            "description": "URL endpoint path starting with /"
           },
           "outputPath": {
             "type": "string",
