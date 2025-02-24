@@ -4,7 +4,7 @@
  * The rate limit key used for API requests, taken from environment variables.
  * @type {string}
  */
-const RATE_LIMIT_KEY = process.env.RATE_LIMIT_KEY || "";
+const RATE_LIMIT_KEY = process.env.HASP_RATE_LIMIT_KEY || "";
 
 /**
  * Configures axios with request and response interceptors.

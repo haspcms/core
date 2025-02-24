@@ -13,7 +13,7 @@ const envConfig = dotenv.config();
 if (envConfig.error) {
   logger.warn("No .env file found or error loading it");
 }
-
+console.log("process", process.env);
 const config = rc("hasp", {});
 
 const dataFormatter = new Jsona();

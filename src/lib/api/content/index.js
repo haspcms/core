@@ -1,7 +1,7 @@
 import { BaseApi } from "../base-api";
 
-const APIDOMAIN = process.env.NEXT_PUBLIC_TENANT_API;
-const MICROSITE = process.env.NEXT_PUBLIC_MICROSITE_ID || "";
+const APIDOMAIN = process.env.HASP_TENANT_API;
+const MICROSITE = process.env.HASP_MICROSITE_ID || "";
 
 /**
  * Content API for interacting with content data.

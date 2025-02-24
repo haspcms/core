@@ -1,6 +1,6 @@
 import { BaseApi } from "../base-api";
 
-const APIDOMAIN = process.env.NEXT_PUBLIC_TENANT_API;
+const APIDOMAIN = process.env.HASP_TENANT_API;
 
 /**
  * TAXONOMYAPI provides static methods to interact with taxonomy-related API endpoints,

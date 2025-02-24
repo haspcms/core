@@ -1,10 +1,10 @@
 import { BaseApi } from "../base-api";
 
 // Constants for API domain and configuration
-const APIDOMAIN = process.env.NEXT_PUBLIC_TENANT_API;
-const MICROSITE = process.env.NEXT_PUBLIC_MICROSITE_ID || "";
+const APIDOMAIN = process.env.HASP_TENANT_API;
+const MICROSITE = process.env.HASP_MICROSITE_ID || "";
 const RATE_LIMIT_KEY =
-  process.env.RATE_LIMIT_KEY || "9itzbGPOyjBiP0zcbX7v1BfQJ9gg2B";
+  process.env.HASP_RATE_LIMIT_KEY || "9itzbGPOyjBiP0zcbX7v1BfQJ9gg2B";
 
 /**
  * PAGEAPI provides static methods to interact with page-related API endpoints,
