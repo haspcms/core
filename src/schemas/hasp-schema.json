@@ -1,10 +1,18 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://unpkg.com/@haspcms/core@0.0.0/src/schemas/hasp-schema.json",
+  "$id": "https://unpkg.com/@haspcms/core@0.3.0/src/schemas/hasp-schema.json",
   "title": "HASP CMS Configuration",
   "description": "Configuration schema for HASP CMS prebuild operations",
   "type": "object",
   "additionalProperties": false,
+  "$defs": {
+    "path": {
+      "$ref": "definitions.json#/definitions/path"
+    },
+    "url": {
+      "$ref": "definitions.json#/definitions/url"
+    }
+  },
   "properties": {
     "prebuildJSONS": {
       "type": "array",
@@ -18,13 +26,10 @@
             "description": "Unique identifier for this JSON resource"
           },
           "endpoint": {
-            "type": "string",
-            "format": "uri",
-            "description": "URL endpoint to fetch the JSON data from"
+            "$ref": "#/$defs/url"
           },
           "outputPath": {
-            "type": "string",
-            "description": "Relative path where the JSON file will be saved"
+            "$ref": "#/$defs/path"
           },
           "useDeserialization": {
             "type": "boolean",
@@ -43,17 +48,14 @@
         "additionalProperties": false,
         "properties": {
           "url": {
-            "type": "string",
-            "format": "uri",
-            "description": "URL of the image to download"
+            "$ref": "#/$defs/url"
           },
           "filename": {
             "type": "string",
             "description": "Name to save the file as"
           },
           "downloadPath": {
-            "type": "string",
-            "description": "Relative path where the image will be saved"
+            "$ref": "#/$defs/path"
           }
         },
         "required": ["url", "filename", "downloadPath"]
