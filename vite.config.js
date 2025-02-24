@@ -1,5 +1,4 @@
 import { resolve } from "path";
-import polyfillNode from "rollup-plugin-polyfill-node";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
@@ -22,7 +21,7 @@ export default defineConfig({
         "rc",
         "chalk",
       ],
-      plugins: [polyfillNode()],
+      // plugins: [polyfillNode()],
       output: {
         globals: {
           axios: "axios",
