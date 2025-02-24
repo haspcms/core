@@ -1,0 +1,74 @@
+{
+  "name": "@haspcms/core",
+  "version": "0.3.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/core.js",
+      "require": "./dist/core.umd.cjs"
+    },
+    "./schema": "./src/schemas/hasp-schema.json"
+  },
+  "main": "./dist/core.umd.cjs",
+  "module": "./dist/core.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**",
+    "README.md",
+    "src/schemas/*.json"
+  ],
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "vite build",
+    "clean": "rm -rf node_modules && rm -rf dist",
+    "dev": "vite",
+    "prepare": "husky && husky install",
+    "preview": "vite preview"
+  },
+  "lint-staged": {
+    "**/package.json": "sort-package-json",
+    "**/*.(ts|tsx|js)": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "chalk": "^5.4.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "eslint-plugin-jsdoc": "^50.6.3",
+    "eslint-plugin-next": "^0.0.0",
+    "globals": "^15.14.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.4.1",
+    "next": "^13.5.4",
+    "prettier": "^3.4.2",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-tailwindcss": "^0.6.10",
+    "rollup-plugin-polyfill-node": "^0.13.0",
+    "sort-package-json": "^2.14.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.5",
+    "vite-plugin-dts": "^4.5.0"
+  },
+  "peerDependencies": {
+    "axios": "^1.2.2",
+    "cosmiconfig": "^9.0.0",
+    "dotenv": "^16.4.7",
+    "flatted": "^3.3.2",
+    "fs": "^0.0.1-security",
+    "jsona": "^1.12.1",
+    "lodash": "^4.17.21",
+    "rc": "^1.2.8",
+    "react": "^18.2.0",
+    "swr": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18.19.1",
+    "npm": ">=10.2.4"
+  },
+  "schema": "./src/schemas/hasp-schema.json"
+}
