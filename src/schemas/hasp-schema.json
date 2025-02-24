@@ -5,14 +5,6 @@
   "description": "Configuration schema for HASP CMS prebuild operations",
   "type": "object",
   "additionalProperties": false,
-  "$defs": {
-    "path": {
-      "$ref": "definitions.json#/definitions/path"
-    },
-    "url": {
-      "$ref": "definitions.json#/definitions/url"
-    }
-  },
   "properties": {
     "prebuildJSONS": {
       "type": "array",
@@ -23,13 +15,16 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "Unique identifier for this JSON resource"
+            "description": "Unique identifier filename for this JSON resource"
           },
           "endpoint": {
-            "$ref": "#/$defs/url"
+            "type": "string",
+            "format": "uri",
+            "description": "URL endpoint to fetch the JSON data from"
           },
           "outputPath": {
-            "$ref": "#/$defs/path"
+            "type": "string",
+            "description": "Relative path where the JSON file will be saved"
           },
           "useDeserialization": {
             "type": "boolean",
@@ -48,14 +43,17 @@
         "additionalProperties": false,
         "properties": {
           "url": {
-            "$ref": "#/$defs/url"
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the image to download"
           },
           "filename": {
             "type": "string",
             "description": "Name to save the file as"
           },
           "downloadPath": {
-            "$ref": "#/$defs/path"
+            "type": "string",
+            "description": "Relative path where the image will be saved"
           }
         },
         "required": ["url", "filename", "downloadPath"]
