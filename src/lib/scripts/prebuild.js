@@ -14,20 +14,18 @@ if (envConfig.error) {
   logger.warn("No .env file found or error loading it");
 }
 
-console.log(process.env);
-console.log(envConfig);
-
-// Load rc config and merge with environment variables
-const config = {
-  ...rc("hasp", {}), // Default empty object if no rc file found
-  // ...process.env, // Override with environment variables
-};
+const config = rc("hasp", {});
 
 const dataFormatter = new Jsona();
-const BASE_API = config.NEXT_PUBLIC_TENANT_API;
+const BASE_API = config?.TENANT_API;
 
-console.log("HASP CONFIG", config);
-console.log("test");
+if (config.LOGGING_ENABLED === "true") {
+  logger.custom(
+    chalk.bgWhiteBright.black(formatBGMessage(SYMBOLS.radioOn, "CONFIG")),
+  );
+  console.log(config);
+}
+
 /**
  * Fetch API data dynamically.
  * @param {string} endpoint - The API endpoint to fetch data from.
@@ -35,10 +33,8 @@ console.log("test");
  * @returns {Promise<object|null>} - Returns the fetched data or null if an error occurred.
  */
 const fetchData = async (endpoint, useDeserialization = true) => {
-  console.log({ BASE_API, endpoint });
   try {
     const response = await axios.get(BASE_API + endpoint);
-    console.log({ response });
     return useDeserialization
       ? dataFormatter.deserialize(response.data)
       : response.data;
@@ -143,9 +139,6 @@ const downloadImage = async (imageUrl, filename, downloadPath) => {
  * Main prebuild function to handle the development prebuild tasks.
  */
 export const preBuildDevelopment = async () => {
-  const config = rc("hasp");
-  console.log({ config });
-
   if (!config || typeof config !== "object") {
     logger.error(`Invalid config: ${config}`);
     logger.warn("Aborting prebuild script...");
