@@ -13,7 +13,6 @@ const envConfig = dotenv.config();
 if (envConfig.error) {
   logger.warn("No .env file found or error loading it");
 }
-console.log("process", process.env);
 const config = rc("hasp", {});
 
 const dataFormatter = new Jsona();
@@ -27,6 +26,16 @@ if (config.LOGGING_ENABLED === "true") {
 }
 
 /**
+ * Utility function to log debug messages only if logging is enabled.
+ * @param {string} message - The debug message to log.
+ */
+const debugLog = (message) => {
+  if (config.LOGGING_ENABLED === "true") {
+    logger.debug(message);
+  }
+};
+
+/**
  * Fetch API data dynamically.
  * @param {string} endpoint - The API endpoint to fetch data from.
  * @param {boolean} [useDeserialization=true] - Whether to deserialize the data using Jsona.
@@ -35,6 +44,7 @@ if (config.LOGGING_ENABLED === "true") {
 const fetchData = async (endpoint, useDeserialization = true) => {
   try {
     const response = await axios.get(BASE_API + endpoint);
+    debugLog(`Fetched data from ${endpoint}: ${JSON.stringify(response.data)}`);
     return useDeserialization
       ? dataFormatter.deserialize(response.data)
       : response.data;
@@ -154,9 +164,14 @@ export const preBuildDevelopment = async () => {
   // Fetch all prebuild JSONs dynamically
   const prebuildTasks = (config?.prebuildJSONS || []).map(
     async ({ name, endpoint, outputPath, useDeserialization = true }) => {
+      debugLog(`Fetching ${name} from ${endpoint}...`);
       const data = await fetchData(endpoint, useDeserialization);
+
       if (data) {
+        debugLog(`Fetched ${name} successfully!`);
         writeJsonIfChanged(`${name}.json`, data, outputPath);
+      } else {
+        logger.error(`Failed to fetch ${name} from ${endpoint}`);
       }
     },
   );
