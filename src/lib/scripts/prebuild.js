@@ -43,8 +43,18 @@ const debugLog = (message) => {
  */
 const fetchData = async (endpoint, useDeserialization = true) => {
   try {
-    const response = await axios.get(BASE_API + endpoint);
-    debugLog(`Fetched data from ${endpoint}: ${JSON.stringify(response.data)}`);
+    const axiosConfig = {
+      headers: {
+        "X-Rate-Key": config?.RATE_LIMIT_KEY,
+      },
+    };
+    const response = await axios.get(`${BASE_API}${endpoint}`, axiosConfig);
+
+    if (config?.HASP_LOGGING_VERBOSE) {
+      debugLog(
+        `Fetched data from ${endpoint}: ${JSON.stringify(response.data)}`,
+      );
+    }
     return useDeserialization
       ? dataFormatter.deserialize(response.data)
       : response.data;

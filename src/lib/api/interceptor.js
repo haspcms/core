@@ -1,10 +1,11 @@
 // import { parseCookies } from "nookies";
+import dotenv from "dotenv";
 
 /**
  * The rate limit key used for API requests, taken from environment variables.
  * @type {string}
  */
-const RATE_LIMIT_KEY = process.env.HASP_RATE_LIMIT_KEY || "";
+const envConfig = dotenv.config();
 
 /**
  * Configures axios with request and response interceptors.
@@ -16,8 +17,7 @@ const RATE_LIMIT_KEY = process.env.HASP_RATE_LIMIT_KEY || "";
  */
 export default function setup(axios) {
   axios.interceptors.request.use((config) => {
-    // Add custom headers for rate limit and security
-    config.headers["X-Rate-Key"] = RATE_LIMIT_KEY;
+    config.headers["X-Rate-Key"] = envConfig?.parsed?.HASP_RATE_LIMIT_KEY;
     config.headers["Strict-Transport-Security"] = "max-age=31536000";
     return config;
   });
