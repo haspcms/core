@@ -39,7 +39,7 @@ export async function paths(config) {
     );
     const pathsHandler = [...filteredPages, ...contentData.flat()];
     const paths = pathsHandler
-      .filter((page) => typeof page.route_url === "string")
+      .filter((page) => typeof page.route_url === "string" && page.route_url)
       .map((page) => ({
         params: { id: page.route_url.split("/").slice(1) },
       }));
