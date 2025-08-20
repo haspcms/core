@@ -1,5 +1,5 @@
-// import { parseCookies } from "nookies";
 import dotenv from "dotenv";
+import { getToken } from "../utils/node-cache.cjs";
 
 /**
  * The rate limit key used for API requests, taken from environment variables.
@@ -16,11 +16,21 @@ const envConfig = dotenv.config();
  * @param {import("axios").AxiosInstance} axios - The axios instance to which interceptors are added.
  */
 export default function setup(axios) {
-  axios.interceptors.request.use((config) => {
-    config.headers["X-Rate-Key"] = envConfig?.parsed?.HASP_RATE_LIMIT_KEY;
-    config.headers["Strict-Transport-Security"] = "max-age=31536000";
-    return config;
-  });
+  axios.interceptors.request.use(
+    (config) => {
+      config.headers["X-Rate-Key"] = envConfig?.parsed?.HASP_RATE_LIMIT_KEY;
+      config.headers["Strict-Transport-Security"] = "max-age=31536000";
+
+      let auth_token = getToken("auth_token");
+
+      config.headers["Authorization"] = `Bearer ` + [auth_token];
+
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    },
+  );
 
   axios.interceptors.response.use(
     (response) => {

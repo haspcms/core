@@ -7,6 +7,7 @@ import path from "path";
 import rc from "rc";
 import logger, { formatBGMessage } from "../logger";
 import SYMBOLS from "../logger/symbols";
+import { getToken } from "../utils/node-cache.cjs";
 
 // Load environment variables first
 const envConfig = dotenv.config();
@@ -43,9 +44,11 @@ const debugLog = (message) => {
  */
 const fetchData = async (endpoint, useDeserialization = true) => {
   try {
+    const auth_token = getToken("auth_token");
     const axiosConfig = {
       headers: {
         "X-Rate-Key": config?.RATE_LIMIT_KEY,
+        Authorization: `Bearer ${auth_token}`,
       },
     };
     const response = await axios.get(`${BASE_API}${endpoint}`, axiosConfig);
