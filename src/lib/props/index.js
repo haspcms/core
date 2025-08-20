@@ -8,7 +8,7 @@ import {
   pagesPath,
 } from "../services";
 import { sortBlocks } from "../utils";
-
+import { cacheAuthToken } from "../utils/node-cache.cjs";
 const dataFormatter = new Jsona();
 
 /**
@@ -23,17 +23,20 @@ const dataFormatter = new Jsona();
  */
 export async function paths(config) {
   try {
+    await cacheAuthToken();
     const pages = await pagesPath();
-    const filteredPages = pages?.filter((e) => e.route_url !== "/") || [];
-
+    const filteredPages =
+      pages?.filter((e) => e.route_url && e.route_url !== "/") || [];
     if (!config || typeof config !== "object") {
       logger.error("Invalid config:", config);
     }
 
     const contentTypes = Object.keys(config?.contents || {});
-
     const contentData = await Promise.all(
       contentTypes.map(async (contentType) => {
+        if (!contentType) {
+          return null;
+        }
         return await contentEntriesPath(contentType);
       }),
     );
@@ -63,6 +66,7 @@ export async function paths(config) {
 export async function props(context) {
   const id = context?.params?.id || [];
   const segment = id.join("/");
+  await cacheAuthToken();
   const pageHandler = await PAGEAPI.findByRoute(
     segment,
     "?include=blockContents.block,metaData,content,taxonomyTerms.taxonomy",

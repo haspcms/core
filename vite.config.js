@@ -20,8 +20,8 @@ export default defineConfig({
         "path",
         "rc",
         "chalk",
+        "node-cache",
       ],
-      // plugins: [polyfillNode()],
       output: {
         globals: {
           axios: "axios",
@@ -33,6 +33,7 @@ export default defineConfig({
           fs: "fs",
           path: "path",
           chalk: "chalk",
+          "node-cache": "node-cache",
         },
       },
     },

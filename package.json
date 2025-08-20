@@ -34,7 +34,8 @@
     ]
   },
   "dependencies": {
-    "chalk": "^5.4.1"
+    "chalk": "^5.4.1",
+    "node-cache": "^5.1.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.6.1",

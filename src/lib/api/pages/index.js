@@ -86,17 +86,21 @@ export class PAGEAPI {
    * @returns {Promise<Object|null>} A promise resolving to the page data if found, or null if an error occurs.
    */
   static async findByRoute(id, params = "") {
+    // let auth_token = getToken("auth_token");
+
     const queryParams = params
       ? params + `&sites=${MICROSITE}`
       : `?sites=${MICROSITE}`;
+
     try {
-      const res = await BaseApi.customGet(
+      const res = await BaseApi.get(
         APIDOMAIN + "/api/route/" + id + queryParams,
-        {
-          headers: {
-            "x-rate-key": RATE_LIMIT_KEY,
-          },
-        },
+        // {
+        //   headers: {
+        //     "x-rate-key": RATE_LIMIT_KEY,
+        //     Authorization: `Bearer ` + [auth_token],
+        //   },
+        // },
       );
       return res.data;
       // eslint-disable-next-line no-unused-vars
