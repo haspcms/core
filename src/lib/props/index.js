@@ -64,6 +64,8 @@ export async function paths(config) {
  *    An object with either `props` for the page or `notFound`.
  */
 export async function props(context) {
+  const isLoggingEnabled = process.env.HASP_LOGGING_ENABLED;
+
   const id = context?.params?.id || [];
   const segment = id.join("/");
   await cacheAuthToken();
@@ -94,8 +96,11 @@ export async function props(context) {
         blocks: await iterateBlock(blocks),
       },
     };
-    // eslint-disable-next-line no-unused-vars
   } catch (error) {
+    if (isLoggingEnabled) {
+      logger.error(error);
+      logger.error(error?.response);
+    }
     return {
       notFound: true,
     };

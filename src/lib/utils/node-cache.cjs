@@ -1,4 +1,5 @@
 const NodeCache = require("node-cache");
+const { default: logger } = require("../logger");
 
 const cache = new NodeCache();
 
@@ -27,6 +28,10 @@ const getToken = (key) => {
  * @returns {Promise<void>} - A promise that resolves when the token is cached.
  */
 const cacheAuthToken = async () => {
+  const isLoggingEnabled = process.env.HASP_LOGGING_ENABLED;
+
+  process.env.HASP_TENANT_STRICT_API_ENABLED === "true";
+
   const isStrictAPIEnabled =
     process.env.HASP_TENANT_STRICT_API_ENABLED === "true";
 
@@ -43,6 +48,10 @@ const cacheAuthToken = async () => {
 
   if (isStrictAPIEnabled && !auth_token) {
     try {
+      if (isLoggingEnabled) {
+        logger.debug("Fetching auth_token...");
+      }
+
       const apiRes = await fetch(`${apiUrl}/api/auth/token`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -53,6 +62,9 @@ const cacheAuthToken = async () => {
 
       auth_token = data?.token;
 
+      if (isLoggingEnabled) {
+        logger.debug("Fetched auth_token...", auth_token);
+      }
       setToken("auth_token", auth_token);
     } catch (error) {
       console.error("An error occurred while caching the auth token:", error);
