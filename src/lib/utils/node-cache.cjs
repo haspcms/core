@@ -45,7 +45,6 @@ const cacheAuthToken = async () => {
   };
 
   let auth_token = getToken("auth_token");
-
   if (isStrictAPIEnabled && !auth_token) {
     try {
       if (isLoggingEnabled) {

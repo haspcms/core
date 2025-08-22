@@ -1,3 +1,4 @@
+import { getToken } from "../../utils/node-cache.cjs";
 import { BaseApi } from "../base-api";
 
 // Constants for API domain and configuration
@@ -86,27 +87,56 @@ export class PAGEAPI {
    * @returns {Promise<Object|null>} A promise resolving to the page data if found, or null if an error occurs.
    */
   static async findByRoute(id, params = "") {
-    // let auth_token = getToken("auth_token");
+    let auth_token = getToken("auth_token");
 
     const queryParams = params
       ? params + `&sites=${MICROSITE}`
       : `?sites=${MICROSITE}`;
 
     try {
-      const res = await BaseApi.get(
-        APIDOMAIN + "/api/route/" + id + queryParams,
-        // {
-        //   headers: {
-        //     "x-rate-key": RATE_LIMIT_KEY,
-        //     Authorization: `Bearer ` + [auth_token],
-        //   },
-        // },
+      const response = await fetch(
+        `${APIDOMAIN}/api/route/${id}${queryParams}`,
+        {
+          method: "GET",
+          headers: {
+            "x-rate-key": RATE_LIMIT_KEY,
+            Authorization: `Bearer ${auth_token}`,
+          },
+        },
       );
-      return res.data;
-      // eslint-disable-next-line no-unused-vars
+
+      // Check for HTTP error responses
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Parse the response as JSON
+      const data = await response.json();
+      console.log({ data });
+      return data;
     } catch (error) {
+      console.log({ error });
       // Handle error by returning null to indicate the operation failed
       return null;
     }
+
+    // try {
+    //   const res = await BaseApi.customGet(
+    //     APIDOMAIN + "/api/route/" + id + queryParams,
+    //     {
+    //       headers: {
+    //         "x-rate-key": RATE_LIMIT_KEY,
+    //         Authorization: `Bearer ${auth_token}`,
+    //       },
+    //     },
+    //   );
+    //   console.log({ res });
+    //   return res.data;
+    //   // eslint-disable-next-line no-unused-vars
+    // } catch (error) {
+    //   console.log("findByRoute", auth_token, error?.response);
+    //   // Handle error by returning null to indicate the operation failed
+    //   return null;
+    // }
   }
 }

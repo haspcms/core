@@ -68,14 +68,16 @@ export async function props(context) {
 
   const id = context?.params?.id || [];
   const segment = id.join("/");
-  await cacheAuthToken();
-  const pageHandler = await PAGEAPI.findByRoute(
-    segment,
-    "?include=blockContents.block,metaData,content,taxonomyTerms.taxonomy",
-  );
 
   try {
+    await cacheAuthToken();
+    const pageHandler = await PAGEAPI.findByRoute(
+      segment,
+      "?include=blockContents.block,metaData,content,taxonomyTerms.taxonomy",
+    );
+    console.log({ pageHandler });
     const page = dataFormatter.deserialize(pageHandler);
+    console.log({ page });
     const blocksHandler =
       page?.blockContents?.map((e) => {
         return {
