@@ -63,6 +63,7 @@ const cacheAuthToken = async () => {
       auth_token = data?.token;
 
       if (isLoggingEnabled) {
+        logger.debug("Fetched data...", data);
         logger.debug("Fetched auth_token...", auth_token);
       }
       setToken("auth_token", auth_token);
