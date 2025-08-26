@@ -1,5 +1,6 @@
 import { Jsona } from "jsona";
 import { CONTENTAPI, FORMAPI, PAGEAPI, TAXONOMYAPI } from "../api";
+import { getToken } from "../utils/node-cache.cjs";
 const dataFormatter2 = new Jsona();
 
 /**
@@ -119,7 +120,10 @@ export async function iteratePage(page) {
  */
 export async function pagesPath() {
   try {
+    const auth_token = getToken();
+    console.log({ auth_token });
     const pagesHandler = await PAGEAPI.getPages();
+    console.log("pagesPath", { pagesHandler });
     const pages = dataFormatter2.deserialize(pagesHandler);
     let allData = pages;
     let { last_page = 1 } = pagesHandler?.meta || {};
@@ -130,10 +134,13 @@ export async function pagesPath() {
       const pagesHandler = await PAGEAPI.getPages(
         `?page[number]=${current_page}`,
       );
+      console.log("inside pagesPath", { pagesHandler });
       const pages = dataFormatter2.deserialize(pagesHandler);
+      console.log("inside pagesPath", { pages });
       allData = [...allData, ...pages];
     }
 
+    console.log("pagesPath", { allData });
     return allData;
   } catch (error) {
     console.error("An error occurred while retrieving pages data:", error);

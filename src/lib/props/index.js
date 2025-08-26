@@ -31,7 +31,7 @@ export async function paths(config) {
     if (!config || typeof config !== "object") {
       logger.error("Invalid config:", config);
     }
-
+    console.log({ filteredPages });
     const contentTypes = Object.keys(config?.contents || {});
     const contentData = await Promise.all(
       contentTypes.map(async (contentType) => {
