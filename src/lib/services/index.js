@@ -118,20 +118,27 @@ export async function iteratePage(page) {
  * @returns {Promise<Array>} An array containing all pages data.
  */
 export async function pagesPath() {
-  const pagesHandler = await PAGEAPI.getPages();
-  const pages = dataFormatter2.deserialize(pagesHandler);
-  let allData = pages;
-  let { last_page = 1 } = pagesHandler?.meta || {};
-  let current_page = 1;
-  while (current_page < last_page) {
-    current_page = current_page + 1;
-    const pagesHandler = await PAGEAPI.getPages(
-      `?page[number]=${current_page}`,
-    );
+  try {
+    const pagesHandler = await PAGEAPI.getPages();
     const pages = dataFormatter2.deserialize(pagesHandler);
-    allData = [...allData, ...pages];
+    let allData = pages;
+    let { last_page = 1 } = pagesHandler?.meta || {};
+    let current_page = 1;
+
+    while (current_page < last_page) {
+      current_page = current_page + 1;
+      const pagesHandler = await PAGEAPI.getPages(
+        `?page[number]=${current_page}`,
+      );
+      const pages = dataFormatter2.deserialize(pagesHandler);
+      allData = [...allData, ...pages];
+    }
+
+    return allData;
+  } catch (error) {
+    console.error("An error occurred while retrieving pages data:", error);
+    throw error; // Re-throw the error after logging it
   }
-  return allData;
 }
 
 /**
