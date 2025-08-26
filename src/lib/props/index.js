@@ -25,6 +25,7 @@ export async function paths(config) {
   try {
     await cacheAuthToken();
     const pages = await pagesPath();
+    console.log({ pages });
     const filteredPages =
       pages?.filter((e) => e.route_url && e.route_url !== "/") || [];
     if (!config || typeof config !== "object") {
@@ -41,6 +42,7 @@ export async function paths(config) {
       }),
     );
     const pathsHandler = [...filteredPages, ...contentData.flat()];
+    console.log({ pathsHandler });
     const paths = pathsHandler
       .filter((page) => typeof page.route_url === "string" && page.route_url)
       .map((page) => ({
@@ -70,6 +72,7 @@ export async function props(context) {
   const segment = id.join("/");
 
   try {
+    console.log({ id, segment });
     await cacheAuthToken();
     const pageHandler = await PAGEAPI.findByRoute(
       segment,
@@ -99,6 +102,7 @@ export async function props(context) {
       },
     };
   } catch (error) {
+    console.log({ isLoggingEnabled, error });
     if (isLoggingEnabled) {
       logger.error(error);
       logger.error(error?.response);
