@@ -120,7 +120,7 @@ export async function iteratePage(page) {
  */
 export async function pagesPath() {
   try {
-    const auth_token = getToken();
+    const auth_token = getToken("auth_token");
     console.log({ auth_token });
     const pagesHandler = await PAGEAPI.getPages();
     console.log("pagesPath", { pagesHandler });
